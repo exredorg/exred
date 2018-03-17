@@ -1,0 +1,96 @@
+{{#paper-sidenav-container class="inner-sidenav"}}
+
+  {{#paper-sidenav
+    class="md-whiteframe-z2"
+    name="leftnav"
+    lockedOpen=flowNavOpen}}
+
+    {{!-- HEADER --}}
+    {{#paper-toolbar accent=true as |toolbar|}}
+      {{#paper-toolbar-tools}}Flows{{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-content padding=true}}
+      {{#each services as |service|}}
+
+          {{!-- SERVICE --}}
+          <strong>{{service.name}}</strong>
+
+          {{#paper-menu as |menu|}}
+            {{#menu.trigger}}
+              {{#paper-button iconButton=true}}
+                {{paper-icon "more vert"}}
+              {{/paper-button}}
+            {{/menu.trigger}}
+            {{#menu.content width=2 as |content|}}
+              {{#content.menu-item onClick="openSomething"}}
+                {{paper-icon "edit"}}<span>Edit</span>
+              {{/content.menu-item}}
+
+              {{#content.menu-item onClick="openSomething"}}
+                {{paper-icon "delete"}}<span>Delete</span>
+              {{/content.menu-item}}
+
+              {{paper-divider}}
+
+              {{#content.menu-item onClick="openSomething" disabled=false}}
+                {{paper-icon "add"}}<span>Add Flow</span>
+              {{/content.menu-item}}
+
+            {{/menu.content}}
+          {{/paper-menu}}
+
+
+          {{#paper-list}}
+            {{#each  service.flows as |flow|}}
+
+              {{!-- FLOW --}}
+              {{#paper-item class="md-1-line" onClick=(action (mut clickedFlow)) as |controls|}}
+                {{controls.radio
+                  groupValue=currentFlowId
+                  value=flow.id
+                  label=flow.name
+                  secondary=true
+                  onChange=(action (queue (action (mut currentFlowId)) (action 'clickOnFlow' currentFlowId)))}}
+
+                <div class="md-secondary-container">
+                  {{#paper-menu position="target-right target" as |menu|}}
+                    {{#menu.trigger}}
+                      {{#paper-button iconButton=true}}
+                        {{paper-icon "more vert" class="md-menu-origin"}}
+                      {{/paper-button}}
+                    {{/menu.trigger}}
+                    {{#menu.content width=2 as |content|}}
+                      {{#content.menu-item onClick="openSomething"}}
+                        {{paper-icon "edit" class="md-menu-align-target"}} <span>Edit</span>
+                      {{/content.menu-item}}
+
+                      {{#content.menu-item onClick="openSomething"}}
+                        {{paper-icon "delete" class="md-menu-align-target"}} <span>Delete</span>
+                      {{/content.menu-item}}
+
+                    {{/menu.content}}
+                  {{/paper-menu}}
+                </div>
+              {{/paper-item}}
+
+            {{/each}}
+          {{/paper-list}}
+
+      {{/each}}
+    {{/paper-content}}
+
+    {{#paper-content}}
+      <span class="flex"></span>
+      {{#paper-button raised=true fab=true}}
+        {{paper-icon "add"}}
+      {{/paper-button}}
+    {{/paper-content}}
+
+  {{/paper-sidenav}}
+
+  {{#paper-card-content class="flex"}}
+    {{yield}}
+  {{/paper-card-content}}
+
+{{/paper-sidenav-container}}

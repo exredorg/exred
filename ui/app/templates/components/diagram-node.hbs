@@ -1,0 +1,22 @@
+{{!-- fire button --}}
+{{#if model.ui_attributes.fire_button}}
+  <div class="fire-button">
+    {{#paper-button iconButton=true onClick=(action "fire")}}{{paper-icon "play_arrow" size=22}}{{/paper-button}}
+  </div>
+{{/if}}
+
+{{!-- left icon --}}
+{{#if model.ui_attributes.left_icon}}
+  <div class="left-icon"> {{paper-icon model.ui_attributes.left_icon size=22}} </div>
+{{/if}}
+
+{{!-- node name --}}
+<span class="node-name">
+  {{model.visibleName}}
+</span>
+
+{{!-- right icon --}}
+{{#if model.ui_attributes.right_icon}}
+  <div class="right-icon"> {{paper-icon model.ui_attributes.right_icon size=22}} </div>
+{{/if}}
+

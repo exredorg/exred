@@ -1,0 +1,7 @@
+{{paper-input
+  label=key
+  value=value
+  type="number"
+  min=fieldAttrs.min
+  max=fieldAttrs.max
+  onChange=(action (queue (action (mut value)) (action configUpdate key value))) }}

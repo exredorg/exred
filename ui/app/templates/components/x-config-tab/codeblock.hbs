@@ -1,0 +1,27 @@
+<b>{{titleize key}}</b>
+{{#paper-button iconButton=true onClick=(action (toggle "isExpanded" this))}}
+  {{paper-icon "open_in_new"}}
+{{/paper-button}}
+
+{{#if isExpanded}}
+    {{#paper-dialog fullscreen=fullscreen clickOutsideToClose=true onClose=(action (toggle "isExpanded" this))}}
+      {{#paper-dialog-content}}
+        <div class="exred-big-editor">
+        {{ember-ace
+          minLines=10
+          maxLines=20
+          value=value
+          mode="ace/mode/elixir"
+          update=(action (queue (action (mut value)) (action configUpdate key value))) }}
+        </div>
+      {{/paper-dialog-content}}
+    {{/paper-dialog}}
+{{/if}}
+
+
+{{ember-ace
+  minLines=10
+  maxLines=20
+  value=value
+  mode="ace/mode/elixir"
+  update=(action (queue (action (mut value)) (action configUpdate key value))) }}

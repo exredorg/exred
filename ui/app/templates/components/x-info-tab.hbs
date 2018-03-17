@@ -1,0 +1,8 @@
+<div class="layout-row flex">
+  <h2>{{state.activeNode.visibleName}}</h2>
+  <span class="flex"></span>
+  {{#if state.activeNode}}
+    {{#paper-button iconButton=true onClick=(action deleteActive)}}{{paper-icon "delete"}}{{/paper-button}}
+  {{/if}}
+</div>
+{{markdown-to-html state.activeNode.info}}

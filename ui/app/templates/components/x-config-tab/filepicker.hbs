@@ -1,0 +1,7 @@
+{{key}}
+{{frost-file-picker
+  value = value
+  accept = fieldAttrs.accept
+  placeholderText = value
+  onChange=(action (queue (action (mut value)) (action configUpdate key value))) 
+}}

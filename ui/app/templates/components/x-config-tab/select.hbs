@@ -1,0 +1,8 @@
+{{#paper-select
+  placeholder = key
+  selected = value
+  options = fieldAttrs.options
+  onchange = (action (queue (action (mut value)) (action configUpdate key value)))
+  as |sel|}}
+  {{sel}}
+{{/paper-select}}

@@ -1,0 +1,30 @@
+<div class="layout-row flex">
+  <h2>{{state.activeNode.visibleName}}</h2>
+  <span class="flex"></span>
+  {{#if state.activeNode}}
+    {{#paper-button iconButton=true onClick=(action deleteActive)}}{{paper-icon "delete"}}{{/paper-button}}
+  {{/if}}
+</div>
+
+<div class="layout layout-column">
+  
+  {{#each-in state.activeNode.config as |key definition|}}
+    <div class="flex-80">
+      {{component
+        (concat "x-config-tab/" definition.type)
+        key=(readonly key)
+        value=(readonly definition.value)
+        configUpdate=(action 'configUpdate')
+        fieldAttrs=definition.attrs}}
+    </div>
+  {{/each-in}}
+
+  {{#if state.configChanged}}
+    {{paper-divider}}
+    {{#paper-button
+      raised=true
+      primary=true
+      onClick=(action saveNewConfig configBuffer)}}Save{{/paper-button}}
+  {{/if}}
+
+</div>

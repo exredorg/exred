@@ -1,0 +1,12 @@
+<div id="debug-list" class="layout-column" style="height: 80vh; overflow: auto; border: solid 1px;">
+
+  {{#paper-list class="flex-nogrow"}}
+    {{#each eventMsgList as |eventMsg|}}
+      {{#paper-item}}
+        {{x-debug-item item=eventMsg}}
+        {{paper-divider}}
+      {{/paper-item}}
+    {{/each}}
+  {{/paper-list}}
+
+</div>

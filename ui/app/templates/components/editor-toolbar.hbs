@@ -1,0 +1,36 @@
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+
+    {{#paper-button iconButton=true click=(action toggleFlowNav)}}
+      {{paper-icon (if flowNavOpen "keyboard_arrow_left" "keyboard_arrow_right")}}
+    {{/paper-button}}
+
+    <h3><b>ExRed</b></h3>
+    <span class="flex"></span>
+    
+    <h4>{{state.activeFlow.name}}&nbsp;/&nbsp;{{state.activeNode.visibleName}}</h4>
+    <span class="flex"></span>
+
+    {{#paper-button
+      raised=true
+      primary=false
+      accent=true
+      onClick=(action 'log' state)}}
+      <h3>log state</h3>
+    {{/paper-button}}
+
+
+    {{#paper-button
+      raised=true
+      primary=true
+      accent=false
+      onClick=(action "requestDeploy")}}
+      <h3>Deploy</h3>
+    {{/paper-button}}
+
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}

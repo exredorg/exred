@@ -1,0 +1,7 @@
+{{paper-input
+  class="flex-80"
+  label=key
+  value=value
+  type="text"
+  maxlength=fieldAttrs.max
+  onChange=(action (queue (action (mut value)) (action configUpdate key value))) }}

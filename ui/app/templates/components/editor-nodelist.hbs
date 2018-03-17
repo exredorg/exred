@@ -1,0 +1,101 @@
+{{#paper-toolbar accent=true as |toolbar|}}
+  {{#paper-toolbar-tools}}Node Types{{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+
+
+{{#cp-panels accordion=false as |panels|}}
+
+  {{#each-in (group-by "category" (sort-by "category" nodelist)) as |category nodelist|}}
+    {{#panels.panel as |panel|}}
+      {{#panel.toggle}}
+        <p>{{titleize category}}</p>
+      {{/panel.toggle}}
+      {{#panel.body}}
+        {{#paper-list}}
+          {{#each nodelist as |node|}}
+            {{#paper-item 
+              click=(action 'clickOnNode' node.id)
+              doubleClick=(action nodeDoubleClick node.id) as |controls|}}
+              
+              <div class={{concat "nodelist-item exred-diagram-node " "exred-category-" node.category}}>
+                {{!fire button}}
+                {{#if node.ui_attributes.fire_button}}
+                  <div class="fire-button">
+                    {{#paper-button iconButton=true noink=true}}{{paper-icon "play_arrow" size=24}}{{/paper-button}}
+                  </div>
+                {{/if}}
+
+                {{!left icon}}
+                {{#if node.ui_attributes.left_icon}}
+                  <div class="left-icon">
+                    {{paper-icon node.ui_attributes.left_icon size=22}}
+                  </div>
+                {{/if}}
+
+                {{!node name}}
+                <span class="node-name">
+                  {{node.name}}
+                </span>
+
+                {{!right icon}}
+                {{#if node.ui_attributes.right_icon}}
+                  <div class="right-icon">
+                    {{paper-icon node.ui_attributes.right_icon size=22}}
+                  </div>
+                {{/if}}
+              </div>
+            {{/paper-item}}
+          {{/each}}
+        {{/paper-list}} 
+        
+        
+      {{/panel.body}}
+    {{/panels.panel}}
+  {{/each-in}}
+
+{{/cp-panels}}
+
+
+
+
+{{!-- {{#paper-list}}
+  {{#each nodelist as |node|}}
+    {{#paper-item 
+      click=(action 'clickOnNode' node.id)
+      doubleClick=(action nodeDoubleClick node.id) as |controls|}}
+      
+    <div class={{concat "nodelist-item exred-diagram-node " "exred-category-" node.category}}>
+      {{! fire button }}
+      {{#if node.ui_attributes.fire_button}}
+        <div class="fire-button">
+          {{#paper-button iconButton=true noink=true}}{{paper-icon "play_arrow" size=24}}{{/paper-button}}
+        </div>
+      {{/if}}
+
+      {{!left icon }}
+      {{#if node.ui_attributes.left_icon}}
+        <div class="left-icon">
+          {{paper-icon node.ui_attributes.left_icon size=22}}
+        </div>
+      {{/if}}
+
+      {{! node name }}
+      <span class="node-name">
+        {{node.name}}
+      </span>
+
+      {{! right icon }}
+      {{#if node.ui_attributes.right_icon}}
+        <div class="right-icon">
+          {{paper-icon node.ui_attributes.right_icon size=22}}
+        </div>
+      {{/if}}
+    </div>
+    
+    {{paper-divider}}
+      
+    {{/paper-item}}
+  {{/each}}
+{{/paper-list}}
+ --}}
+

@@ -1,0 +1,177 @@
+@import 'exred-theme';
+@import 'ember-paper';
+
+
+// jsPlumb styling
+.jtk-drag-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;    
+}
+
+
+// canvas nodes styling
+// #######################
+.exred-diagram-node {
+  padding: 0px;
+  margin: 0px;
+
+  overflow: hidden;
+
+  border: 3px solid #888888;
+  outline: none;
+  border-radius: 10px;
+
+  background-color: #71b8ff;
+  color: #ffffff;
+  min-width: 80px;
+  height: 35px;
+  
+  transition: background-color .3s;
+}
+
+.exred-diagram-node .fire-button {
+  float: left; 
+  margin-top: -4px;
+  margin-left: 0px;
+  border-right: 3px solid #888888; 
+  border-radius: 0px; 
+  color: #000000; 
+  background-color: rgba(0,0,0,0.2);
+}
+
+.exred-diagram-node .left-icon{
+  margin-top: 5px;
+  float: left; 
+  width: 24px;
+}
+
+.exred-diagram-node .right-icon{
+  margin-top: 5px;
+  float: right; 
+  width: 24px;
+}
+
+.exred-diagram-node .node-name{
+  margin-top: 6px;
+  float: left; 
+  overflow:hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+  white-space: nowrap;
+}
+
+
+
+// node colors for categories
+// ########################################################
+$color1: #8bbaf0;
+$color2: #f0cb8b;
+$color3: #f0998b;
+$color4: #f0b28b;
+$color5: #a68bf0;
+$color6: #8bf0c3;
+$color7: #eeeeee;
+
+.exred-category-function  { background-color: $color1; color: #222222;}
+.exred-category-input     { background-color: $color2; color: #222222; }
+.exred-category-output    { background-color: $color3; color: #222222; }
+
+.exred-category-daemon    { background-color: $color7; color: #222222; }
+
+.nodelist-item {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.exred-diagram-node:hover {
+  background-color: #ffffff;
+}
+
+.exred-diagram-node:focus {
+  background-color: #ffffff;
+}
+
+.exred-diagram-node > * {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.diagramConnLabel {
+  color: #222222;
+  font-size: 11px;
+  border: 1px solid #222222;
+  border-radius: 5px;
+}
+
+.diagramConnLabel:hover {
+  color: #222222;
+  background-color: #cccccc;
+  border: 1px solid #222222;
+  border-radius: 5px;
+}
+
+.diagramDeleteConnLabel {
+  color: #222222;
+  font-size: 1px;
+  border: 1px solid #222222;
+  border-radius: 5px;
+}
+.diagramDeleteConnLabel:hover {
+  color: #ffffff;
+  background-color: #cc0000;
+  font-size: 16px;
+  border: 1px solid #222222;
+  border-radius: 20px;
+}
+
+.diagramFilterConnLabel {
+  color: #222222;
+  background-color: #222222;
+  font-size: 11px;
+  border: 1px solid #222222;
+  border-radius: 1px;
+}
+.diagramFilterConnLabel:hover {
+  background-color: #cccccc;
+}
+
+.toastInSuccess {
+  font-color: #5ba325;
+}
+
+.debugHoverOn {
+  background-color: yellow;
+}
+
+.cp-Panel {
+  border: 1px solid #ddd;
+}
+.cp-Panel-toggle {
+  display: block;
+  padding: 0.2em;
+  text-align: center;
+  font-weight: bold;
+  background-color: whitewash;
+  color: black;
+}
+.cp-Panel-toggle:link {
+  text-decoration: none;
+}
+.cp-Panel-toggle:hover {
+}
+.cp-Panel-body-inner {
+  padding: 0.2em;
+}
+
+.exred-big-editor {
+  width: 50vw;
+  height: 80vh;
+}

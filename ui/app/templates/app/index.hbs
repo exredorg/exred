@@ -1,0 +1,19 @@
+{{x-editor
+  model=model
+  selectedNode=selectedNode
+  flowNavOpen=flowNavOpen
+  currentFlowId=currentFlowId
+  currentFlow=(readonly currentFlow)
+  configChanged=configChanged
+
+  toggleFlowNav=(action 'toggleFlowNav')
+
+  addConnection=(action 'addConnection')
+  deleteConnection=(action 'deleteConnection')
+  
+  saveNewConfig=(action 'saveNewConfig')
+  updateNodePosition=(action 'updateNodePosition')
+  nodeDoubleClick=(action 'createDNode')
+  
+  deleteActive=(action 'deleteActive')
+}}

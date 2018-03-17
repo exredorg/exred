@@ -1,0 +1,10 @@
+<div class="jtk-demo-canvas canvas-wide jtk-surface jtk-surface-nopan" id="canvas">
+  {{#each nodes as |node|}}
+    {{diagram-node
+      jspInstance=jspInstance
+      model=node 
+      click=(action 'clickOnNode' node.id)
+      updateNodePositionXY=(action updateNodePosition node.id)}}
+    <br><br><br>
+  {{/each}}
+</div>

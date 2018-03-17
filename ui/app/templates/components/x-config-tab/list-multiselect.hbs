@@ -1,0 +1,16 @@
+{{#paper-list}}
+
+  {{#paper-subheader}}{{titleize (humanize key)}}{{/paper-subheader}}
+  {{#each itemlist as |item|}}
+    {{#paper-item as |controls|}}
+      <p>{{item.name}}</p>
+      <div class="md-secondary-container">
+        {{controls.checkbox
+          value=item.enabled
+          secondary=true
+          onChange=(action (mut item.enabled))}}
+      </div>
+    {{/paper-item}}
+  {{/each}}
+
+{{/paper-list}}

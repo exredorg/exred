@@ -1,0 +1,79 @@
+{{paper-toaster}}
+
+{{editor-toolbar
+  toggleFlowNav=(action toggleFlowNav)
+  flowNavOpen=(readonly flowNavOpen)
+  selectedNodeId=selectedNode.id
+  currentFlowId=currentFlowId
+}}
+
+{{#editor-flownav
+  flowNavOpen=(readonly flowNavOpen)
+  currentFlowId=state.activeFlowId
+  services=model.services
+  flows=model.flows
+}}
+
+  <div class="layout-row">
+    <div class="flex-10">
+      {{editor-nodelist
+        nodelist=(filter-by "isPrototype" true model.nodes)
+        nodeDoubleClick=(action nodeDoubleClick)
+      }}
+    </div>
+
+    <div class="flex-70">
+      <div class="layout-column">
+        <div class="flex-90">
+          {{editor-flows
+            nodeInstances=state.activeFlow.nodes
+            connections=state.activeFlow.connections
+            updateNodePosition=(action updateNodePosition)
+            addConnection=(action addConnection)
+            deleteConnection=(action deleteConnection)
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-20">
+
+      {{#paper-tabs
+        primary=false
+        center=false
+        stretch=true
+        borderBottom=true
+        selected=selectedTab
+        onChange=(action (mut selectedTab)) as |tabs|}}
+        {{#tabs.tab}}Info{{/tabs.tab}}
+        {{#tabs.tab}}Config{{/tabs.tab}}
+        {{#tabs.tab}}Debug{{/tabs.tab}}
+      {{/paper-tabs}}
+
+      {{#liquid-bind (hash tab=selectedTab) class="md-padding tab-animation" as |current|}}
+
+        {{#if (eq current.tab 0)}} 
+          {{x-info-tab 
+            selectedNode=selectedNode
+            deleteActive=(action deleteActive)
+          }} 
+        {{/if}}
+
+        {{#if (eq current.tab 1)}}
+          {{x-config-tab
+            selectedNode=selectedNode
+            deleteActive=(action deleteActive)
+            saveNewConfig=(action saveNewConfig)}}
+        {{/if}}
+
+        {{#if (eq current.tab 2)}}
+          {{x-debug-tab}}
+        {{/if}}
+
+      {{/liquid-bind}}
+
+    </div>
+  </div>
+
+{{/editor-flownav}}
+
