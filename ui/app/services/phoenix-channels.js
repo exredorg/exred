@@ -1,7 +1,8 @@
 //import Service from '@ember/service';
 import {inject as service} from '@ember/service';
-
+import config from '../config/environment';
 import PhoenixSocket from 'phoenix/services/phoenix-socket';
+
  
 export default PhoenixSocket.extend({
   
@@ -19,8 +20,13 @@ export default PhoenixSocket.extend({
   
   connect(/*url, options*/) {
     // const myjwt = "abacnwih12eh12...";
+    
+    // infer connection url from the ember data connection parameters OR
+    // from the window location
+    const host = config.DS.host.replace(/^http/, 'ws') || "ws://"+window.location.hostname+":"+window.location.port
+    const socketUrl = host + "/socket"
     // connect the socket
-    this._super("ws://localhost:4000/socket", {
+    this._super(socketUrl, {
       //params: {token: myjwt}
     });
  
