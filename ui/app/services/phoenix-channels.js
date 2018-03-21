@@ -23,8 +23,9 @@ export default PhoenixSocket.extend({
     
     // infer connection url from the ember data connection parameters OR
     // from the window location
-    const host = config.DS.host.replace(/^http/, 'ws') || "ws://"+window.location.hostname+":"+window.location.port
-    const socketUrl = host + "/socket"
+    const host = (config.DS.host || "ws://"+window.location.hostname+":"+window.location.port).replace(/^http/, 'ws');
+    const socketUrl = host + "/socket";
+    console.log('PhoenixSocket attempting to connect to: '+socketUrl);
     // connect the socket
     this._super(socketUrl, {
       //params: {token: myjwt}

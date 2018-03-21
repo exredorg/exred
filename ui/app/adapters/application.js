@@ -7,6 +7,10 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   host: config.DS.host || window.location.protocol+"//"+window.location.hostname+":"+window.location.port,
   namespace: config.DS.namespace,
   authorizer: 'authorizer:oauth2',
+  init: function(){
+    console.log('adapter host: '+this.host);
+    this._super(...arguments);
+  },
 
   urlForCreateRecord(modelName/*, snapshot*/) {
     switch(modelName) {
