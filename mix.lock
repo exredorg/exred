@@ -13,6 +13,7 @@
   "exred_library": {:git, "git@bitbucket.org:zsolt001/exred_library.git", "69fbfdf8e7659e488e9ce4591c0e4fbf54ccd112", []},
   "exred_node_aws_iot_daemon": {:git, "git@bitbucket.org:zsolt001/exred_node_aws_iot_daemon", "dbc955cc645f84f40c425103e630e6e27f694246", []},
   "exred_node_aws_iot_thingshadow_in": {:git, "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_in", "808b593bced8de062d6582e3619fa57817443f0e", []},
+  "exred_node_aws_iot_thingshadow_out": {:git, "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out", "37f5bfd90ec6440563e31b1052b6eb78dc85a506", []},
   "exred_node_debug": {:git, "git@bitbucket.org:zsolt001/exred_node_debug", "5ab1cf7c94b336b63d0070b8cc426eaf840c76d7", []},
   "exred_node_multiply": {:git, "git@bitbucket.org:zsolt001/exred_node_multiply", "35c734eb2bc9be5d43beb7db0d911ce49cdc25ac", []},
   "exred_node_redis_daemon": {:git, "git@bitbucket.org:zsolt001/exred_node_redis_daemon", "b964e004b717945c9ba3384d0134daaa36f8d9a5", []},

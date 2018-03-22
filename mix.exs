@@ -34,6 +34,7 @@ defmodule Exred.Umbrella.Mixfile do
         {:exred_node_redis_in,                git: "git@bitbucket.org:zsolt001/exred_node_redis_in"},
         {:exred_node_redis_out,               git: "git@bitbucket.org:zsolt001/exred_node_redis_out"},
         {:exred_node_aws_iot_thingshadow_in,  git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_in"},
+        {:exred_node_aws_iot_thingshadow_out, git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out"},
       ]
   end
 end
