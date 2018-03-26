@@ -64,5 +64,10 @@
   ],
   "dependencies": {
     "jsplumb": "^2.5.11"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/json-view"
+    ]
   }
 }

@@ -10,6 +10,13 @@
         {{ember-ace
           minLines=10
           maxLines=20
+          tabSize=2
+          highlightActiveLine=true
+          showInvisibles=true
+          showLineNumbers=true
+          editorClass="exred-codeblock"
+          enableDefaultAutocompletion=true
+          enableLiveAutoCompletion=true
           value=value
           mode="ace/mode/elixir"
           update=(action (queue (action (mut value)) (action configUpdate key value))) }}
@@ -22,6 +29,13 @@
 {{ember-ace
   minLines=10
   maxLines=20
+  tabSize=2
+  highlightActiveLine=true
+  showInvisibles=true
+  showLineNumbers=true
+  editorClass="exred-codeblock"
+  enableDefaultAutocompletion=true
+  enableLiveAutoCompletion=true
   value=value
   mode="ace/mode/elixir"
   update=(action (queue (action (mut value)) (action configUpdate key value))) }}

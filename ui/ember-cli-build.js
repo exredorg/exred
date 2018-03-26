@@ -8,6 +8,7 @@ module.exports = function(defaults) {
     ace: {
       themes: ['ambiance', 'chaos'],
       modes: ['javascript', 'elixir'],
+      exts:  ['language_tools'],
       workers: ['javascript']
     }
   });
@@ -15,7 +16,15 @@ module.exports = function(defaults) {
   app.import('node_modules/jsplumb/dist/css/jsplumbtoolkit-defaults.css');
   app.import('vendor/jsplumbtoolkit-demo.css');
   app.import('node_modules/jsplumb/dist/js/jsplumb.min.js');
-  //app.import('bower_components/json-formatter-js/dist/json-formatter.js');
+  // app.import('bower_components/json-formatter-js/dist/json-formatter.js',{
+  //   export: {
+  //     jsonformatter: [JSONFormatter]
+  //   }
+  // });
+  app.import('vendor/renderjson.js');
+  app.import('vendor/renderjson.css');
+  app.import('vendor/shims/renderjson.js');
+  
   // Add options here });
 
   // Use `app.import` to add additional libraries to the generated
