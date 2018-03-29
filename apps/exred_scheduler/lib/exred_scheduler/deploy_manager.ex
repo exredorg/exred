@@ -36,11 +36,11 @@ defmodule Exred.Scheduler.DeployManager do
     ########################################
     children = Supervisor.which_children DeploymentSupervisor
     children |> Enum.each( fn
+      ({child_id, :restarting, _, child_modules}) ->
+        Logger.warn "Couldn't terminate #{child_id} (in the process of restarting). Module: #{inspect child_modules}"
       ({child_id, _child_pid, _child_type, _child_modules}) ->
         :ok = Supervisor.terminate_child DeploymentSupervisor, child_id
         :ok = Supervisor.delete_child DeploymentSupervisor, child_id
-      ({child_id, :restarting, _, child_modules}) ->
-        Logger.warn "Couldn't terminate #{child_id} (in the process of restarting). Module: #{inspect child_modules}"
       end
     )
     Logger.info "terminated child processes"

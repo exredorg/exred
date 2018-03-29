@@ -7,7 +7,6 @@ export default Component.extend({
     this._super(...arguments);
     
     let value = this.get('value');
-    let items = this.get('items');
     
     // internal component property to store which items are enabled
     let itemlist = [];

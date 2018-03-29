@@ -4,7 +4,7 @@ defmodule Exred.Scheduler.Mixfile do
   def project do
     [
       app: :exred_scheduler,
-      version: "0.1.0",
+      version: "0.1.0-" <> version_postfix(),
       build_path: "../../_build",
       config_path: "./config/config.exs",
       deps_path: "../../deps",
@@ -23,6 +23,18 @@ defmodule Exred.Scheduler.Mixfile do
     ]
   end
 
+
+  defp version_postfix do
+    mixfile = Mix.Project.get()
+    include_nodes = Keyword.fetch!(mixfile.project, :include_nodes)
+    # generate hash of the included nodes list
+    # this ensures that the version changes when we add a new node as
+    # dependency
+    # which in turn triggers a recompile of Exred.Scheduler
+    :crypto.hash(:sha256, :io_lib.write(include_nodes)) |> Base.encode16()
+  end
+  
+  
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     mixfile = Mix.Project.get()

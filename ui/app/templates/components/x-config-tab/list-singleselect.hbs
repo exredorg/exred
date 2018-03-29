@@ -3,12 +3,13 @@
   <h4>{{titleize (humanize key)}}</h4>
   {{#each itemlist as |item|}}
     {{#paper-item as |controls|}}
-      <p>{{item.name}}</p>
+      <p>{{humanize item}}</p>
       <div class="md-secondary-container">
-        {{controls.checkbox
-          value=item.enabled
+        {{controls.radio
+          groupValue=selectedItem
+          value=item
           secondary=true
-          onChange=(action (mut item.enabled))}}
+          onChange=(action (mut selectedItem))}}
       </div>
     {{/paper-item}}
   {{/each}}
