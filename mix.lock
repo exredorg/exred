@@ -16,7 +16,6 @@
   "exred_node_aws_iot_thingshadow_in": {:git, "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_in", "d12ff3c4c4f380bc491948fd7269e8ce7f2300c9", []},
   "exred_node_aws_iot_thingshadow_out": {:git, "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out", "37f5bfd90ec6440563e31b1052b6eb78dc85a506", []},
   "exred_node_debug": {:git, "git@bitbucket.org:zsolt001/exred_node_debug", "5ab1cf7c94b336b63d0070b8cc426eaf840c76d7", []},
-  "exred_node_gpio_in": {:git, "git@bitbucket.org:zsolt001/exred_node_gpio_in", "e2836483b8ba6499901faa53c75ff90c6df07ac6", []},
   "exred_node_multiply": {:git, "git@bitbucket.org:zsolt001/exred_node_multiply", "35c734eb2bc9be5d43beb7db0d911ce49cdc25ac", []},
   "exred_node_redis_daemon": {:git, "git@bitbucket.org:zsolt001/exred_node_redis_daemon", "b964e004b717945c9ba3384d0134daaa36f8d9a5", []},
   "exred_node_redis_in": {:git, "git@bitbucket.org:zsolt001/exred_node_redis_in", "4c2fe2a7c45f2b669f099b95881dc207d8ded756", []},

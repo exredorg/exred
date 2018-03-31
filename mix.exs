@@ -3,7 +3,7 @@ defmodule Exred.Umbrella.Mixfile do
 
   def project do
     [
-      version: "0.1.1",
+      version: "0.1.2",
       apps_path: "apps",
       start_permanent: Mix.env == :prod,
       deps: deps(),
