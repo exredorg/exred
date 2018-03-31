@@ -7,60 +7,58 @@
 </div>
 
 
-{{#paper-card as |card|}}
-  {{#card.content}}
-    {{markdown-to-html state.activeNode.info}}
-  {{/card.content}}
-{{/paper-card}}
-
-{{#paper-card as |card|}}
-  {{#card.content}}
-
-    {{#paper-data-table as |table|}}
-
-    {{#table.head as |head|}}
-      {{#head.column}}Config Field{{/head.column}}
-      {{#head.column}}Type{{/head.column}}
-      {{#head.column}}Attributes{{/head.column}}
-    {{/table.head}}
-
-    {{#table.body as |body|}}
-      {{#each-in state.activeNode.config as |configKey configValue|}}
-        {{#body.row as |row|}}
-          
-          {{#row.cell}}
-            {{#if configValue.info}}
-              {{#paper-tooltip position='top'}}{{configValue.info}}{{/paper-tooltip}}
-            {{/if}}
-            {{configKey}}
-          {{/row.cell}}
-
-          {{#row.cell}}{{configValue.type}}{{/row.cell}}
-
-          {{#row.cell}}
-            {{#if configValue.attrs}}
-              {{#paper-data-table as |attrsTable|}}
-              {{#attrsTable.body as |attrsBody|}}
-                {{#each-in configValue.attrs as |name value|}}
-                  {{#attrsBody.row as |attrsRow|}}
-                    {{#attrsRow.cell}}{{name}}{{/attrsRow.cell}}
-                    {{#attrsRow.cell}}{{value}}{{/attrsRow.cell}}
-                  {{/attrsBody.row}}
-                {{/each-in}}
-              {{/attrsTable.body}}
-              {{/paper-data-table}}
-            {{/if}}
-          {{/row.cell}}
-
-        {{/body.row}}
-      {{/each-in}}
-    {{/table.body}}
-
-    {{/paper-data-table}}
-
-  {{/card.content}}
-{{/paper-card}}
+  {{#paper-card as |card|}}
+    {{#card.content}}
+        {{markdown-to-html state.activeNode.info}}
+    {{/card.content}}
+  {{/paper-card}}
 
 
+  {{#paper-card as |card|}}
+    {{#card.content}}
 
+      {{#paper-data-table as |table|}}
+
+      {{#table.head as |head|}}
+        {{#head.column}}Config Field{{/head.column}}
+        {{#head.column}}Type{{/head.column}}
+        {{#head.column}}Attributes{{/head.column}}
+      {{/table.head}}
+
+      {{#table.body as |body|}}
+        {{#each-in state.activeNode.config as |configKey configValue|}}
+          {{#body.row as |row|}}
+            
+            {{#row.cell}}
+              {{#if configValue.info}}
+                {{#paper-tooltip position='top'}}{{configValue.info}}{{/paper-tooltip}}
+              {{/if}}
+              {{configKey}}
+            {{/row.cell}}
+
+            {{#row.cell}}{{configValue.type}}{{/row.cell}}
+
+            {{#row.cell}}
+              {{#if configValue.attrs}}
+                {{#paper-data-table as |attrsTable|}}
+                {{#attrsTable.body as |attrsBody|}}
+                  {{#each-in configValue.attrs as |name value|}}
+                    {{#attrsBody.row as |attrsRow|}}
+                      {{#attrsRow.cell}}{{name}}{{/attrsRow.cell}}
+                      {{#attrsRow.cell}}{{value}}{{/attrsRow.cell}}
+                    {{/attrsBody.row}}
+                  {{/each-in}}
+                {{/attrsTable.body}}
+                {{/paper-data-table}}
+              {{/if}}
+            {{/row.cell}}
+
+          {{/body.row}}
+        {{/each-in}}
+      {{/table.body}}
+
+      {{/paper-data-table}}
+
+    {{/card.content}}
+  {{/paper-card}}
 
