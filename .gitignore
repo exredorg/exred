@@ -22,3 +22,6 @@ erl_crash.dump
 
 /certs/
 .DS_Store
+
+/apps/exred_node*
+mix.lock

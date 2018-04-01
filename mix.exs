@@ -27,16 +27,16 @@ defmodule Exred.Umbrella.Mixfile do
   
   defp include_nodes do
       [ 
-        {:exred_node_trigger,                 git: "git@bitbucket.org:zsolt001/exred_node_trigger"},
-        {:exred_node_debug,                   git: "git@bitbucket.org:zsolt001/exred_node_debug"},
-        {:exred_node_multiply,                git: "git@bitbucket.org:zsolt001/exred_node_multiply"},
-        {:exred_node_redis_daemon,            git: "git@bitbucket.org:zsolt001/exred_node_redis_daemon"},
-        {:exred_node_aws_iot_daemon,          git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_daemon"},
-        {:exred_node_redis_in,                git: "git@bitbucket.org:zsolt001/exred_node_redis_in"},
-        {:exred_node_redis_out,               git: "git@bitbucket.org:zsolt001/exred_node_redis_out"},
-        {:exred_node_aws_iot_thingshadow_in,  git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_in"},
-        {:exred_node_aws_iot_thingshadow_out, git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out"},
-        {:exred_node_gpio_in,                 ">= 0.0.0", git: "git@bitbucket.org:zsolt001/exred_node_gpio_in", branch: 'master'},
+      #  {:exred_node_trigger,                 git: "git@bitbucket.org:zsolt001/exred_node_trigger"},
+      #  {:exred_node_debug,                   git: "git@bitbucket.org:zsolt001/exred_node_debug"},
+      #  {:exred_node_multiply,                git: "git@bitbucket.org:zsolt001/exred_node_multiply"},
+      #  {:exred_node_redis_daemon,            git: "git@bitbucket.org:zsolt001/exred_node_redis_daemon"},
+      #  {:exred_node_aws_iot_daemon,          git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_daemon"},
+      #  {:exred_node_redis_in,                git: "git@bitbucket.org:zsolt001/exred_node_redis_in"},
+      #  {:exred_node_redis_out,               git: "git@bitbucket.org:zsolt001/exred_node_redis_out"},
+      #  {:exred_node_aws_iot_thingshadow_in,  git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_in"},
+      #  {:exred_node_aws_iot_thingshadow_out, git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out"},
+      #  {:exred_node_gpio_in,                 ">= 0.0.0", git: "git@bitbucket.org:zsolt001/exred_node_gpio_in", branch: 'master'},
       ]
   end
 end
