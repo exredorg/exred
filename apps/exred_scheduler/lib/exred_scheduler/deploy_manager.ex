@@ -58,6 +58,9 @@ defmodule Exred.Scheduler.DeployManager do
       Logger.info "STARTING NODE INSTANCE: #{node.name}"
       start_args = [node.id, node.config]
       child_spec = Supervisor.child_spec {node.module, start_args}, id: node.id
+
+      # TODO: what are we going to do when a child doesn't start up?
+      # ignore and deploy rest of flow OR abort and report failed deployment
       {:ok, pid} = Supervisor.start_child DeploymentSupervisor, child_spec
     end
     Logger.info "started child processes"
