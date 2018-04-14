@@ -39,6 +39,7 @@
     "ember-cli-uglify": "^2.0.0",
     "ember-collapsible-panel": "^2.1.1",
     "ember-composable-helpers": "^2.0.3",
+    "ember-computed-style": "^0.2.0",
     "ember-cp-validations": "^3.5.1",
     "ember-data": "~2.17.0",
     "ember-debug-logger": "^1.0.0",

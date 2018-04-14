@@ -1,7 +1,10 @@
-<b>{{titleize key}}</b>
-{{#paper-button iconButton=true onClick=(action (toggle "isExpanded" this))}}
-  {{paper-icon "open_in_new"}}
-{{/paper-button}}
+<div>
+  {{uppercase (humanize key)}}
+  {{#paper-button iconButton=true onClick=(action (toggle "isExpanded" this))}}
+    {{paper-icon "open_in_new" size=14}}
+  {{/paper-button}}
+</div>
+
 
 {{#if isExpanded}}
     {{#paper-dialog fullscreen=fullscreen clickOutsideToClose=true onClose=(action (toggle "isExpanded" this))}}
@@ -14,7 +17,7 @@
           highlightActiveLine=true
           showInvisibles=true
           showLineNumbers=true
-          editorClass="exred-codeblock"
+          editorClass="exred-codeblock-editor"
           enableDefaultAutocompletion=true
           enableLiveAutoCompletion=true
           value=value
@@ -33,7 +36,7 @@
   highlightActiveLine=true
   showInvisibles=true
   showLineNumbers=true
-  editorClass="exred-codeblock"
+  editorClass="exred-codeblock-editor"
   enableDefaultAutocompletion=true
   enableLiveAutoCompletion=true
   value=value

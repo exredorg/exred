@@ -6,18 +6,32 @@
   {{/if}}
 </div>
 
-<div class="layout layout-column">
-  
-  {{#each-in state.activeNode.config as |key definition|}}
-    <div class="flex-80">
+<div class="layout-row layout-wrap">
+  {{#each state.activeNode.ui_attributes.config_order as |configKey|}}
+  {{#with (get state.activeNode.config configKey) as |configDefinition|}}
+
+  <div class="config-tile">
+    <div class="layout-column">
+      {{!-- <strong> {{titleize (humanize configKey)}} </strong> --}}
+      {{#if configDefinition.info}}
+        {{#paper-tooltip position='top' class="exred-tooltip"}}{{ configDefinition.info }}{{/paper-tooltip}}
+      {{/if}}
       {{component
-        (concat "x-config-tab/" definition.type)
-        key=(readonly key)
-        value=(readonly definition.value)
+        (concat "x-config-tab/" configDefinition.type)
+        key=(readonly configKey)
+        value=(readonly configDefinition.value)
         configUpdate=(action 'configUpdate')
-        fieldAttrs=definition.attrs}}
+        fieldAttrs=configDefinition.attrs}}
     </div>
-  {{/each-in}}
+  </div>
+
+  {{/with}}
+  {{/each}}
+  
+</div>
+
+
+<div class="layout-column">
 
   {{#if state.configChanged}}
     {{paper-divider}}

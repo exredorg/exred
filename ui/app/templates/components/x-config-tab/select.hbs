@@ -1,5 +1,6 @@
 {{#paper-select
   placeholder = key
+  label = (uppercase (humanize key))
   selected = value
   options = fieldAttrs.options
   onchange = (action (queue (action (mut value)) (action configUpdate key value)))

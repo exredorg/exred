@@ -2,6 +2,28 @@
 @import 'ember-paper';
 @import 'paper-data-table';
 
+.exred-tooltip {
+  font-size: 14px;
+}
+
+div.config-tile label {
+  color: white !important;
+  font-weight: bold;
+  background: #3485a8;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.exred-float-right{
+  float: right;
+}
+
+.config-tile {
+  // background: #f4f6f7;
+  margin: 5px;
+  padding: 5px;
+  min-width: 200px;
+}
 
 // jsPlumb styling
 .jtk-drag-select {
@@ -176,10 +198,10 @@ $color7: #eeeeee;
   width: 50vw;
   height: 80vh;
 }
-.exred-big-editor .exred-codeblock {
+.exred-big-editor .exred-codeblock-editor{
   font-size: 20px;
 }
 
-.exred-codeblock {
+.exred-codeblock-editor {
   font-size: 16px;
 }

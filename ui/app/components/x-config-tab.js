@@ -5,7 +5,7 @@ import { observer } from '@ember/object';
 
 export default Component.extend({
   state: service('global-state'),
-
+  
   configBuffer: null,
   
   init: function(){

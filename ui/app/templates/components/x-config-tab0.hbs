@@ -1,0 +1,60 @@
+<div class="layout-row flex">
+  <h2>{{state.activeNode.visibleName}}</h2>
+  <span class="flex"></span>
+  {{#if state.activeNode}}
+    {{#paper-button iconButton=true onClick=(action deleteActive)}}{{paper-icon "delete"}}{{/paper-button}}
+  {{/if}}
+</div>
+
+
+{{#paper-card as |card|}}
+  {{#card.content}}
+
+    {{#paper-data-table as |table|}}
+
+    {{#table.body as |body|}}
+      {{#each state.activeNode.ui_attributes.config_order as |configKey|}}
+      {{#with (get state.activeNode.config configKey) as |configDefinition|}}
+
+        {{#body.row as |row|}}
+          {{#row.cell}}
+            {{#if configVal.info}}
+              {{#paper-tooltip position='top' class="exred-tooltip"}}{{ configVal.info }}{{/paper-tooltip}}
+            {{/if}}
+            {{titleize (humanize configKey)}}
+          {{/row.cell}}
+
+          {{#row.cell}}
+            <div class="flex-80">
+              {{component
+                (concat "x-config-tab/" configDefinition.type)
+                key=(readonly configKey)
+                value=(readonly configDefinition.value)
+                configUpdate=(action 'configUpdate')
+                fieldAttrs=configDefinition.attrs}}
+            </div>
+          {{/row.cell}}
+
+        {{/body.row}}
+
+      {{/with}}
+      {{/each}}
+    {{/table.body}}
+
+    {{/paper-data-table}}
+
+  {{/card.content}}
+{{/paper-card}}
+
+
+<div class="layout layout-column">
+
+  {{#if state.configChanged}}
+    {{paper-divider}}
+    {{#paper-button
+      raised=true
+      primary=true
+      onClick=(action saveNewConfig configBuffer)}}Save{{/paper-button}}
+  {{/if}}
+
+</div>

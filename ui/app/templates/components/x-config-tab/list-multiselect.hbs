@@ -1,6 +1,6 @@
 {{#paper-list}}
+  {{#paper-subheader}}{{uppercase (humanize key)}}{{/paper-subheader}}
 
-  <h4>{{titleize (humanize key)}}</h4>
   {{#each itemlist as |item|}}
     {{#paper-item as |controls|}}
       <p>{{item.name}}</p>
