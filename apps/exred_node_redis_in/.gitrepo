@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@bitbucket.org:zsolt001/exred_node_redis_in
+	branch = master
+	commit = 4c2fe2a7c45f2b669f099b95881dc207d8ded756
+	parent = 4375f24e359939b1ee00c9098968ebd1a7dd22e7
+	cmdver = 0.3.1
