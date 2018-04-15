@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out
+	branch = master
+	commit = c0ebfcdf852e290c346bcb34fb1c37303c3b86b4
+	parent = b87b13200149dc5db101d86442b3c67a6ac79fa3
+	cmdver = 0.3.1
