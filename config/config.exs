@@ -23,3 +23,13 @@ config :exred_node_aws_iot_daemon, :ssl,
   keyfile: "/Users/zkeszthelyi/src/exred_repos/exred/certs/c592a5868f-private.pem.key",
   certfile: "/Users/zkeszthelyi/src/exred_repos/exred/certs/c592a5868f-certificate.pem.crt",
   cacertfile: "/Users/zkeszthelyi/src/exred_repos/exred/certs/symantec_ca_root.pem"
+
+# db config for Phoenix
+# the dbproxy in exred_library also uses this if it exists
+config :exred, Exred.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "zkeszthelyi",
+  password: "",
+  database: "exred_dev",
+  hostname: "localhost",
+  pool_size: 10
