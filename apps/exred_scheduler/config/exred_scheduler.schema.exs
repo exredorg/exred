@@ -48,8 +48,10 @@ but should be brought to the users attention, or `{:error, message}` if it is in
 
 See the moduledoc for `Conform.Schema.Validator` for more details and examples.
 """
-[extends: [],
- import: [],
- mappings: [],
- transforms: [],
- validators: []]
+[
+  extends: [],
+  import: [],
+  mappings: [],
+  transforms: [],
+  validators: []
+]

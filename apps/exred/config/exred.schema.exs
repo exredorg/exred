@@ -2,24 +2,28 @@
   extends: [],
   import: [],
   mappings: [
-   "log_level": [
+
+
+    "log_level": [
       commented: false,
       datatype: :atom,
-      default: :info,
-      doc: "Provide documentation for logger.console.level here.",
+      default: :debug,
+      doc: "Console log level",
       hidden: false,
       to: "logger.console.level"
     ],
 
-   "ui.host": [
+    "exred.Elixir.ExredWeb.Endpoint.secret_key_base": [
       commented: false,
       datatype: :binary,
-      default: "localhost",
-      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.url.host here.",
+      default: "lNynDH9TigJu4E18vTfeAXKJUU6Vx8ARmpuFUW3DXOTdGiKSKktPPswoWAhx9LwW",
+      doc: "Random string used by Phoenix to encrypt cookies",
       hidden: false,
-      to: "exred.Elixir.ExredWeb.Endpoint.url.host"
+      to: "exred.Elixir.ExredWeb.Endpoint.secret_key_base"
     ],
-    "ui.port": [
+    
+
+    "endpoint.http.port": [
       commented: false,
       datatype: :integer,
       default: 4000,
@@ -27,14 +31,23 @@
       hidden: false,
       to: "exred.Elixir.ExredWeb.Endpoint.http.port"
     ],
-    "ui.secret_key_base": [
+    "endpoint.url.host": [
       commented: false,
       datatype: :binary,
-      default: "lNynDH9TigJu4E18vTfeAXKJUU6Vx8ARmpuFUW3DXOTdGiKSKktPPswoWAhx9LwW",
-      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.secret_key_base here.",
+      default: "localhost",
+      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.url.host here.",
       hidden: false,
-      to: "exred.Elixir.ExredWeb.Endpoint.secret_key_base"
+      to: "exred.Elixir.ExredWeb.Endpoint.url.host"
     ],
+    "endpoint.url.port": [
+      commented: false,
+      datatype: :integer,
+      default: 4000,
+      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.url.port here.",
+      hidden: false,
+      to: "exred.Elixir.ExredWeb.Endpoint.url.port"
+    ],
+
 
     "db.username": [
       commented: false,
@@ -67,7 +80,7 @@
       hidden: false,
       to: "exred.Elixir.Exred.Repo.hostname"
     ],
-    "db.connection_pool_size": [
+    "db.conn_pool_size": [
       commented: false,
       datatype: :integer,
       default: 10,

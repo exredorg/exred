@@ -31,16 +31,14 @@ environment :dev do
   set dev_mode: true
   set include_erts: false
   set cookie: :"9GI|sFj<F{R2~xr06]xAtZd:Q*E/0X*G9eS].1$(?.J_ftwD%tlt<N{*(Sdf%w%_"
+  plugin Conform.ReleasePlugin
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
   set cookie: :"2$2Hk*FzVY@3XSuNdt>gGBCmCpFxt&WX(=Job*VMCxmhrA&5phabB{^/fxJCEQ<f"
-  set overlays: [
-    #{:link, "./lib/<%= release_name %>-<%= release_version %>/priv/static", "./ui/dist"}
-    #{:link, "./ui/dist", "./lib/priv"}
-  ]
+  plugin Conform.ReleasePlugin
 end
 
 # You may define one or more releases in this file.
