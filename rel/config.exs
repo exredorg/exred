@@ -47,7 +47,7 @@ end
 # will be used by default
 
 release :exred do
-  set version: "0.1.0"
+  set version: "0.1.1"
   set applications: [
     :runtime_tools,
     exred: :permanent,
@@ -62,6 +62,7 @@ release :exred do
     exred_node_redis_out: :permanent,
     exred_node_suppress: :permanent,
     exred_node_trigger: :permanent,
+    exred_node_multiply: :permanent,
     exred_scheduler: :permanent
   ]
 end

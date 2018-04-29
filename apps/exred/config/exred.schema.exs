@@ -27,7 +27,7 @@
       commented: false,
       datatype: :integer,
       default: 4000,
-      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.http.port here.",
+      doc: "UI http port",
       hidden: false,
       to: "exred.Elixir.ExredWeb.Endpoint.http.port"
     ],
@@ -35,7 +35,7 @@
       commented: false,
       datatype: :binary,
       default: "localhost",
-      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.url.host here.",
+      doc: "Hostname in URLs",
       hidden: false,
       to: "exred.Elixir.ExredWeb.Endpoint.url.host"
     ],
@@ -43,7 +43,7 @@
       commented: false,
       datatype: :integer,
       default: 4000,
-      doc: "Provide documentation for exred.Elixir.ExredWeb.Endpoint.url.port here.",
+      doc: "Port in URLs",
       hidden: false,
       to: "exred.Elixir.ExredWeb.Endpoint.url.port"
     ],
@@ -53,14 +53,14 @@
       commented: false,
       datatype: :binary,
       default: "zkeszthelyi",
-      doc: "Provide documentation for exred.Elixir.Exred.Repo.username here.",
+      doc: "Username for database connectio",
       hidden: false,
       to: "exred.Elixir.Exred.Repo.username"
     ],
     "db.password": [
       commented: false,
       datatype: :binary,
-      doc: "Provide documentation for exred.Elixir.Exred.Repo.password here.",
+      doc: "Password",
       hidden: false,
       to: "exred.Elixir.Exred.Repo.password"
     ],
@@ -68,7 +68,7 @@
       commented: false,
       datatype: :binary,
       default: "exred_dev",
-      doc: "Provide documentation for exred.Elixir.Exred.Repo.database here.",
+      doc: "Database name",
       hidden: false,
       to: "exred.Elixir.Exred.Repo.database"
     ],
@@ -76,7 +76,7 @@
       commented: false,
       datatype: :binary,
       default: "localhost",
-      doc: "Provide documentation for exred.Elixir.Exred.Repo.hostname here.",
+      doc: "Hostname for database connection",
       hidden: false,
       to: "exred.Elixir.Exred.Repo.hostname"
     ],
@@ -84,7 +84,7 @@
       commented: false,
       datatype: :integer,
       default: 10,
-      doc: "Provide documentation for exred.Elixir.Exred.Repo.pool_size here.",
+      doc: "Database connection pool size",
       hidden: false,
       to: "exred.Elixir.Exred.Repo.pool_size"
     ]
