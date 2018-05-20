@@ -25,3 +25,5 @@ erl_crash.dump
 
 /apps/exred_node*
 mix.lock
+
+ssh-id_rsa_github

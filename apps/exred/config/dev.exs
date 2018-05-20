@@ -41,7 +41,8 @@ config :phoenix, :stacktrace_depth, 20
 config :exred, Exred.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "zkeszthelyi",
-  password: "",
+  password: "hello",
   database: "exred_dev",
   hostname: "localhost",
+  port: 5432,
   pool_size: 10
