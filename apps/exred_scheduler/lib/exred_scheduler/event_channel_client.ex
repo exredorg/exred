@@ -27,7 +27,7 @@ defmodule Exred.Scheduler.EventChannelClient do
 
 
   def handle_info(:timeout, :initializing) do
-    state = case ExredWeb.Endpoint.subscribe( @cmd_topic ) do
+    state = case ExredUIWeb.Endpoint.subscribe( @cmd_topic ) do
       :ok -> :subscribed
       {:error, err} ->
         Logger.error "Failed to subscribe to #{@cmd_topic}: #{inspect err}"
@@ -43,7 +43,7 @@ defmodule Exred.Scheduler.EventChannelClient do
 
 
   def handle_cast({:broadcast, event, msg}, state = :subscribed) do
-    ExredWeb.Endpoint.broadcast @cmd_topic, event, msg
+    ExredUIWeb.Endpoint.broadcast @cmd_topic, event, msg
     {:noreply, state}
   end
 end
