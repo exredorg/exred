@@ -26,10 +26,10 @@ config :exred_node_aws_iot_daemon, :ssl,
 
 # db config for Phoenix
 # the dbproxy in exred_library also uses this if it exists
-config :exred, Exred.Repo,
+config :exred_ui, ExredUI.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "zkeszthelyi",
-  password: "",
-  database: "exred_dev",
+  password: "hello",
+  database: "exred_ui_dev",
   hostname: "localhost",
   pool_size: 10
