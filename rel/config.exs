@@ -51,6 +51,7 @@ release :exred do
   set applications: [
     :runtime_tools,
     exred: :permanent,
+    exred_ui: :permanent,
     exred_node_aws_iot_daemon: :permanent,
     exred_node_aws_iot_thingshadow_in: :permanent,
     exred_node_aws_iot_thingshadow_out: :permanent,

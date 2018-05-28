@@ -1,0 +1,4 @@
+FROM tobi312/rpi-postgresql:9.6
+
+# RUN apt-get update -qq
+ADD uuid-extension.sql /docker-entrypoint-initdb.d/

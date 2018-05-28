@@ -1,5 +1,5 @@
 # Build container
-FROM elixir:1.5 as builder
+FROM rpi-elixir:1.6.1 as builder
 
 COPY ssh-id_rsa_github /root/.ssh/id_rsa_github
 COPY ssh-config /root/.ssh/config
@@ -21,12 +21,12 @@ RUN mix do deps.get, deps.compile
 
 RUN MIX_ENV=prod mix phx.digest
 RUN MIX_ENV=prod mix compile
-RUN mix release --env=prod --verbose
+RUN mix release --env=rpi3 --verbose
 
 
 
 
-FROM elixir:1.5
+FROM rpi-elixir:1.6.1
 
 ARG VERSION=0.1.4
 
