@@ -29,6 +29,7 @@
       default: 4000,
       doc: "UI http port",
       hidden: false,
+      env_var: "EXRED_UI_PORT",
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.http.port"
     ],
     "endpoint.url.host": [
@@ -37,6 +38,7 @@
       default: "localhost",
       doc: "Hostname in URLs",
       hidden: false,
+      env_var: "EXRED_UI_HOSTNAME",
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.url.host"
     ],
     "endpoint.url.port": [
@@ -45,6 +47,7 @@
       default: 4000,
       doc: "Port in URLs",
       hidden: false,
+      env_var: "EXRED_UI_PORT",
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.url.port"
     ],
 
@@ -53,7 +56,7 @@
       commented: true,
       datatype: :binary,
       default: "zkeszthelyi",
-      doc: "Username for database connectio",
+      doc: "Database username",
       hidden: false,
       env_var: "EXRED_DB_USERNAME",
       to: "exred_ui.Elixir.ExredUI.Repo.username"
@@ -61,7 +64,7 @@
     "db.password": [
       commented: true,
       datatype: :binary,
-      doc: "Password",
+      doc: "Database password",
       hidden: false,
       env_var: "EXRED_DB_PASSWORD",
       to: "exred_ui.Elixir.ExredUI.Repo.password"

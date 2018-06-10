@@ -7,6 +7,9 @@ db_name="exred_ui_dev"
 db_username="zkeszthelyi"
 db_password="hello"
 
+# create network
+docker network create exrednet
+
 docker run -d --name ${db_hostname} --network exrednet -p ${db_port}:5432 \
     -e POSTGRES_USER=${db_username} \
     -e POSTGRES_PASSWORD=${db_password} \
@@ -19,5 +22,5 @@ docker run -dit --name exred --network exrednet -p 4000:4000 \
     -e EXRED_DB_NAME=${db_name} \
     -e EXRED_DB_USERNAME=${db_username} \
     -e EXRED_DB_PASSWORD=${db_password} \
-    exred:latest /bin/bash
+    exred:latest 
 

@@ -1,5 +1,17 @@
-# Build container
-FROM rpi-elixir:1.6.1 as builder
+FROM resin/rpi-raspbian:stretch as builder
+
+WORKDIR /elixir
+
+RUN set -xe \
+  && apt-get update \
+  && apt-get install apt-transport-https \
+  && echo "deb https://packages.erlang-solutions.com/debian stretch contrib" | tee /etc/apt/sources.list.d/erlang-solutions.list \
+  && curl -fSl -O https://packages.erlang-solutions.com/debian/erlang_solutions.asc \
+  && apt-key add erlang_solutions.asc \
+  && apt-get update \
+  && apt-get install elixir \
+  && apt-get install erlang-dev erlang-parsetools \
+  && apt-get install git openssh-client build-essential
 
 COPY ssh-id_rsa_github /root/.ssh/id_rsa_github
 COPY ssh-config /root/.ssh/config
@@ -19,14 +31,12 @@ RUN mix local.hex --force
 RUN mix local.rebar --force
 RUN mix do deps.get, deps.compile
 
-RUN MIX_ENV=prod mix phx.digest
-RUN MIX_ENV=prod mix compile
-RUN mix release --env=rpi3 --verbose
+RUN mix phx.digest
+RUN mix compile
+RUN mix release
 
 
-
-
-FROM rpi-elixir:1.6.1
+FROM resin/rpi-raspbian:stretch
 
 ARG VERSION=0.1.4
 

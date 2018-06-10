@@ -1,4 +1,5 @@
 # Build container
+#################################
 FROM elixir:1.5 as builder
 
 COPY ssh-id_rsa_github /root/.ssh/id_rsa_github
@@ -24,8 +25,8 @@ RUN MIX_ENV=prod mix compile
 RUN mix release --env=prod --verbose
 
 
-
-
+# Final image
+#################################
 FROM elixir:1.5
 
 ARG VERSION=0.1.4
@@ -37,14 +38,12 @@ ENV PORT=4000 \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
 
+COPY docker/wait-for-it.sh /usr/local/bin/
+
 WORKDIR /app
-
 COPY --from=builder /exred/_build/prod/rel/exred/releases/${VERSION}/exred.tar.gz .
-
 RUN tar zxf exred.tar.gz && rm exred.tar.gz
-
 RUN chown -R root ./releases
 
 USER root
-
 CMD ["/app/bin/exred", "foreground"]

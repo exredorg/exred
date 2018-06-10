@@ -22,7 +22,7 @@ config :exred_ui, ExredUIWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   root: ".",
-  version: Application.spec(:myapp, :vsn)
+  version: Application.spec(:exred_ui, :vsn)
 
 # Do not print debug messages in production
 config :logger, level: :info
