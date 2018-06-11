@@ -33,8 +33,7 @@ ARG VERSION=0.1.4
 
 EXPOSE 4000
 
-ENV PORT=4000 \
-    MIX_ENV=prod \
+ENV MIX_ENV=prod \
     REPLACE_OS_VARS=true \
     SHELL=/bin/bash
 
