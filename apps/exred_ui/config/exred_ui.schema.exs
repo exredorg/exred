@@ -2,7 +2,7 @@
   extends: [],
   import: [],
   mappings: [
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.http.port": [
+    "exred_ui.Endpoint.http.port": [
       commented: false,
       datatype: :integer,
       default: 4000,
@@ -11,7 +11,7 @@
       env_var: "EXRED_UI_PORT",
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.http.port"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.url.host": [
+    "exred_ui.Endpoint.url.host": [
       commented: false,
       datatype: :binary,
       default: "localhost",
@@ -20,7 +20,7 @@
       env_var: "EXRED_UI_HOSTNAME",
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.url.host"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.url.port": [
+    "exred_ui.Endpoint.url.port": [
       commented: false,
       datatype: :integer,
       default: 4000,
@@ -29,16 +29,16 @@
       env_var: "EXRED_UI_PORT",
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.url.port"
     ],
-    "exred_ui.Elixir.ExredUI.Repo.username": [
+    "exred_ui.Repo.username": [
       commented: false,
       datatype: :binary,
-      default: "zkeszthelyi",
+      default: "exred_user",
       doc: "DB username",
       hidden: false,
       env_var: "EXRED_DB_USERNAME",
       to: "exred_ui.Elixir.ExredUI.Repo.username"
     ],
-    "exred_ui.Elixir.ExredUI.Repo.password": [
+    "exred_ui.Repo.password": [
       commented: false,
       datatype: :binary,
       default: "hello",
@@ -47,16 +47,16 @@
       env_var: "EXRED_DB_PASSWORD",
       to: "exred_ui.Elixir.ExredUI.Repo.password"
     ],
-    "exred_ui.Elixir.ExredUI.Repo.database": [
+    "exred_ui.Repo.database": [
       commented: false,
       datatype: :binary,
-      default: "exred_ui_dev",
+      default: "exred_ui_dev_from_ui",
       doc: "DB name",
       hidden: false,
       env_var: "EXRED_DB_NAME",
       to: "exred_ui.Elixir.ExredUI.Repo.database"
     ],
-    "exred_ui.Elixir.ExredUI.Repo.hostname": [
+    "exred_ui.Repo.hostname": [
       commented: false,
       datatype: :binary,
       default: "localhost",
@@ -65,7 +65,7 @@
       env_var: "EXRED_DB_HOSTNAME",
       to: "exred_ui.Elixir.ExredUI.Repo.hostname"
     ],
-    "exred_ui.Elixir.ExredUI.Repo.port": [
+    "exred_ui.Repo.port": [
       commented: false,
       datatype: :integer,
       default: 5432,
@@ -78,7 +78,7 @@
 
 
 
-    "exred_ui.Elixir.ExredUI.Repo.pool_size": [
+    "exred_ui.Repo.pool_size": [
       commented: false,
       datatype: :integer,
       default: 10,
@@ -93,7 +93,7 @@
       hidden: true,
       to: "mime.types"
     ],
-    "guardian.Elixir.Guardian.allowed_algos": [
+    "guardian.allowed_algos": [
       commented: false,
       datatype: [
         list: :binary
@@ -105,7 +105,7 @@
       hidden: true,
       to: "guardian.Elixir.Guardian.allowed_algos"
     ],
-    "guardian.Elixir.Guardian.verify_module": [
+    "guardian.verify_module": [
       commented: false,
       datatype: :atom,
       default: Guardian.JWT,
@@ -113,7 +113,7 @@
       hidden: true,
       to: "guardian.Elixir.Guardian.verify_module"
     ],
-    "guardian.Elixir.Guardian.issuer": [
+    "guardian.issuer": [
       commented: false,
       datatype: :binary,
       default: "Pchat",
@@ -121,7 +121,7 @@
       hidden: true,
       to: "guardian.Elixir.Guardian.issuer"
     ],
-    "guardian.Elixir.Guardian.ttl": [
+    "guardian.ttl": [
       commented: false,
       #datatype: {:integer, :atom},
       datatype: [
@@ -132,7 +132,7 @@
       hidden: true,
       to: "guardian.Elixir.Guardian.ttl"
     ],
-    "guardian.Elixir.Guardian.verify_issuer": [
+    "guardian.verify_issuer": [
       commented: false,
       datatype: :atom,
       default: true,
@@ -140,7 +140,7 @@
       hidden: true,
       to: "guardian.Elixir.Guardian.verify_issuer"
     ],
-    "guardian.Elixir.Guardian.secret_key": [
+    "guardian.secret_key": [
       commented: false,
       datatype: :binary,
       default: "VR8YBJA94hYgn5KSxAHhr6RtBNJI2ZIdt11Cl3WlaxNtC+lX3hPTVSbFOBDKPEGF",
@@ -148,7 +148,7 @@
       hidden: true,
       to: "guardian.Elixir.Guardian.secret_key"
     ],
-    "guardian.Elixir.Guardian.serializer": [
+    "guardian.serializer": [
       commented: false,
       datatype: :atom,
       default: Pchat.GuardianSerializer,
@@ -214,7 +214,7 @@
       hidden: true,
       to: "exred_ui.ecto_repos"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.secret_key_base": [
+    "exred_ui.Endpoint.secret_key_base": [
       commented: false,
       datatype: :binary,
       default: "lNynDH9TigJu4E18vTfeAXKJUU6Vx8ARmpuFUW3DXOTdGiKSKktPPswoWAhx9LwW",
@@ -222,7 +222,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.secret_key_base"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.render_errors.view": [
+    "exred_ui.Endpoint.render_errors.view": [
       commented: false,
       datatype: :atom,
       default: ExredUIWeb.ErrorView,
@@ -230,7 +230,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.render_errors.view"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.render_errors.accepts": [
+    "exred_ui.Endpoint.render_errors.accepts": [
       commented: false,
       datatype: [
         list: :binary
@@ -243,7 +243,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.render_errors.accepts"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.pubsub.name": [
+    "exred_ui.Endpoint.pubsub.name": [
       commented: false,
       datatype: :atom,
       default: ExredUI.PubSub,
@@ -251,7 +251,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.pubsub.name"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.pubsub.adapter": [
+    "exred_ui.Endpoint.pubsub.adapter": [
       commented: false,
       datatype: :atom,
       default: Phoenix.PubSub.PG2,
@@ -259,7 +259,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.pubsub.adapter"
     ],
-    "exred_ui.Elixir.ExredUI.Repo.adapter": [
+    "exred_ui.Repo.adapter": [
       commented: false,
       datatype: :atom,
       default: Ecto.Adapters.Postgres,
@@ -267,7 +267,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUI.Repo.adapter"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.debug_errors": [
+    "exred_ui.Endpoint.debug_errors": [
       commented: false,
       datatype: :atom,
       default: true,
@@ -275,7 +275,7 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.debug_errors"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.code_reloader": [
+    "exred_ui.Endpoint.code_reloader": [
       commented: false,
       datatype: :atom,
       default: false,
@@ -283,22 +283,22 @@
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.code_reloader"
     ],
-    "exred_ui.Elixir.ExredUIWeb.Endpoint.check_origin": [
+    "exred_ui.Endpoint.check_origin": [
       commented: false,
       datatype: :atom,
       default: false,
       doc: "Provide documentation for exred_ui.Elixir.ExredUIWeb.Endpoint.check_origin here.",
       hidden: true,
       to: "exred_ui.Elixir.ExredUIWeb.Endpoint.check_origin"
-    ],
+    ]
   ],
   transforms: [
-    "guardian.Elixir.Guardian.ttl": fn conf ->
-      case Conform.Conf.get(conf, "guardian.Elixir.Guardian.ttl") do
-        [{_key, [num, period]}] -> {String.to_integer(num), String.to_atom(period)}
-        _ -> nil
-      end
-    end
+#    "guardian.Elixir.Guardian.ttl": fn conf ->
+#      case Conform.Conf.get(conf, "guardian.Elixir.Guardian.ttl") do
+#        [{_key, [num, period]}] -> {String.to_integer(num), String.to_atom(period)}
+#        _ -> nil
+#      end
+#    end
   ],
   validators: []
 ]

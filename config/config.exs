@@ -10,26 +10,33 @@ use Mix.Config
 import_config "../apps/*/config/config.exs"
 
 
-config :logger, :console,
-  level: :debug,
-  format: "$date $time | [$level]$levelpad | $metadata | $message\n",
-  metadata: [:module]
+# config :logger, :console,
+#   level: :debug,
+#   format: "$date $time | [$level]$levelpad | $metadata | $message\n",
+#   metadata: [:module]
 
-
-# ssl options for the MQTT client
-# these get passed to the Erlang ssl module
-# see ssl_option() here: http://erlang.org/doc/man/ssl.html
-config :exred_node_aws_iot_daemon, :ssl,
-  keyfile: "/Users/zkeszthelyi/src/exred_repos/exred/certs/c592a5868f-private.pem.key",
-  certfile: "/Users/zkeszthelyi/src/exred_repos/exred/certs/c592a5868f-certificate.pem.crt",
-  cacertfile: "/Users/zkeszthelyi/src/exred_repos/exred/certs/symantec_ca_root.pem"
 
 # db config for Phoenix
 # the dbproxy in exred_library also uses this if it exists
 config :exred_ui, ExredUI.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "zkeszthelyi",
+  username: "exred_user",
   password: "hello",
   database: "exred_ui_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :exred_library, :psql_conn,
+  username: "exred_user",
+  password: "hello",
+  database: "exred_ui_dev",
+  hostname: "localhost",
+  port: 5432
+
+# ssl options for the MQTT client
+# these get passed to the Erlang ssl module
+# see ssl_option() here: http://erlang.org/doc/man/ssl.html
+config :exred_node_aws_iot_daemon, :ssl,
+  keyfile: "/Users/zkeszthelyi/exred_data/c592a5868f-private.pem.key",
+  certfile: "/Users/zkeszthelyi/exred_data/c592a5868f-certificate.pem.crt",
+  cacertfile: "/Users/zkeszthelyi/exred_data/symantec_ca_root.pem"

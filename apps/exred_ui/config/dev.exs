@@ -40,7 +40,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :exred_ui, ExredUI.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "zkeszthelyi",
+  username: "exred_user",
   password: "hello",
   database: "exred_ui_dev",
   hostname: "localhost",

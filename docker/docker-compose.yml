@@ -8,10 +8,7 @@ services:
             - "5432:5432"
         networks:
             - exrednet
-        environment:
-            POSTGRES_USER: exred_user
-            POSTGRES_PASSWORD: hello
-            POSTGRES_DB: exred_ui_dev
+        env_file: env_file
     exred:
         image: exred:latest
         depends_on:
@@ -22,12 +19,8 @@ services:
             - "4000:4000"
         networks:
             - exrednet
-        environment:
-            EXRED_DB_HOSTNAME: exred_db
-            EXRED_DB_PORT: 5432
-            EXRED_DB_NAME: exred_ui_dev
-            EXRED_DB_USERNAME: exred_user
-            EXRED_DB_PASSWORD: hello
+        env_file: env_file
         command: ["/usr/local/bin/wait-for-it.sh", "exred_db:5432", "-t", "30", "-s", "--", "/app/bin/exred", "foreground"]
+        #command: ["/usr/local/bin/wait-for-it.sh", "exred_db:5432", "-t", "30", "-s", "--", "tail", "-f", "/dev/null"]
 networks:
     exrednet:

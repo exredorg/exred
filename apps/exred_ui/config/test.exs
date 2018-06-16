@@ -12,7 +12,7 @@ config :logger, level: :warn
 # Configure your database
 config :exred_ui, ExredUI.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "zkeszthelyi",
+  username: "exred_user",
   password: "",
   database: "exred_ui_test",
   hostname: "localhost",

@@ -44,5 +44,9 @@ COPY --from=builder /exred/_build/prod/rel/exred/releases/${VERSION}/exred.tar.g
 RUN tar zxf exred.tar.gz && rm exred.tar.gz
 RUN chown -R root ./releases
 
+# truncate conf file, configuration will be passed in through environment variables (see conf schemas)
+RUN echo "" > ./releases/${VERSION}/exred.conf
+
+
 USER root
 CMD ["/app/bin/exred", "foreground"]
