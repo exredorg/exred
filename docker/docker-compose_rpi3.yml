@@ -21,6 +21,5 @@ services:
             - exrednet
         env_file: env_file
         command: ["/usr/local/bin/wait-for-it.sh", "exred_db:5432", "-t", "30", "-s", "--", "/app/bin/exred", "foreground"]
-        #command: ["/usr/local/bin/wait-for-it.sh", "exred_db:5432", "-t", "30", "-s", "--", "tail", "-f", "/dev/null"]
 networks:
     exrednet:
