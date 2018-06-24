@@ -4,7 +4,7 @@ defmodule Exred.Scheduler.Mixfile do
   def project do
     [
       app: :exred_scheduler,
-      version: "0.1.0",
+      version: "0.1.1",
       build_path: "../../_build",
       config_path: "./config/config.exs",
       deps_path: "../../deps",
@@ -44,7 +44,8 @@ defmodule Exred.Scheduler.Mixfile do
       {:exred_node_redis_in,                git: "git@bitbucket.org:zsolt001/exred_node_redis_in.git"},
       {:exred_node_redis_out,               git: "git@bitbucket.org:zsolt001/exred_node_redis_out.git"},
       {:exred_node_suppress,                git: "git@bitbucket.org:zsolt001/exred_node_suppress.git"},
-      {:exred_node_trigger,                 git: "git@bitbucket.org:zsolt001/exred_node_trigger.git"}
+      {:exred_node_trigger,                 git: "git@bitbucket.org:zsolt001/exred_node_trigger.git"},
+      {:exred_node_shell,                   git: "git@bitbucket.org:zsolt001/exred_node_shell.git"}
     ]
   end
 end

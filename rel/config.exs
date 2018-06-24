@@ -64,6 +64,7 @@ release :exred do
     exred_node_suppress: :permanent,
     exred_node_trigger: :permanent,
     exred_node_multiply: :permanent,
+    exred_node_shell: :permanent,
     exred_scheduler: :permanent
   ]
 end
