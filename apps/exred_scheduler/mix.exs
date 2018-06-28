@@ -45,6 +45,7 @@ defmodule Exred.Scheduler.Mixfile do
       {:exred_node_redis_out,               git: "git@bitbucket.org:zsolt001/exred_node_redis_out.git"},
       {:exred_node_suppress,                git: "git@bitbucket.org:zsolt001/exred_node_suppress.git"},
       {:exred_node_trigger,                 git: "git@bitbucket.org:zsolt001/exred_node_trigger.git"},
+      {:exred_node_rpiphoto,                git: "git@bitbucket.org:zsolt001/exred_node_rpiphoto.git"},
       {:exred_node_shell,                   git: "git@bitbucket.org:zsolt001/exred_node_shell.git"}
     ]
   end

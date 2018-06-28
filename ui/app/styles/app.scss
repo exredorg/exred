@@ -99,11 +99,11 @@ $color5: #a68bf0;
 $color6: #8bf0c3;
 $color7: #eeeeee;
 
-.exred-category-function  { background-color: $color1; color: #222222;}
-.exred-category-input     { background-color: $color2; color: #222222; }
-.exred-category-output    { background-color: $color3; color: #222222; }
-
-.exred-category-daemon    { background-color: $color7; color: #222222; }
+.exred-category-function     {background-color: $color1; color: #222222;}
+.exred-category-input        {background-color: $color2; color: #222222;}
+.exred-category-output       {background-color: $color3; color: #222222;}
+.exred-category-raspberry-pi {background-color: $color4; color: #222222}
+.exred-category-daemon       {background-color: $color7; color: #222222;}
 
 .nodelist-item {
   margin-bottom: 5px;

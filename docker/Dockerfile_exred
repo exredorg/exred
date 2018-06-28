@@ -29,7 +29,7 @@ RUN mix release --env=prod --verbose
 #################################
 FROM elixir:1.5
 
-ARG VERSION=0.1.4
+ARG VERSION=0.1.5
 
 EXPOSE 4000
 

@@ -47,7 +47,7 @@ end
 # will be used by default
 
 release :exred do
-  set version: "0.1.4"
+  set version: "0.1.5"
   set applications: [
     :runtime_tools,
     exred: :permanent,
@@ -65,6 +65,7 @@ release :exred do
     exred_node_trigger: :permanent,
     exred_node_multiply: :permanent,
     exred_node_shell: :permanent,
+    exred_node_rpiphoto: :permanent,
     exred_scheduler: :permanent
   ]
 end
