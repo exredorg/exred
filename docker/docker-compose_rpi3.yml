@@ -20,6 +20,7 @@ services:
         networks:
             - exrednet
         env_file: env_file
+        privileged: true
         command: ["/usr/local/bin/wait-for-it.sh", "exred_db:5432", "-t", "30", "-s", "--", "/app/bin/exred", "foreground"]
 networks:
     exrednet:
