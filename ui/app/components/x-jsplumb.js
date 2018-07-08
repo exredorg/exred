@@ -31,6 +31,7 @@ export default Component.extend({
 
     // called when a connection is added
     jspEventConnection: function(connInfo, originalEvent, thisComponent) {
+      thisComponent.debug('STARTED jspEventConnection');
       // check if the connection was established programatically (originalEvent is undefined)
       // or by using the mouse (originalEvent is defined)
       if (originalEvent) {
@@ -109,8 +110,12 @@ export default Component.extend({
     });
   },
 
+  // TODO this needs to run only on the initial render. 
+  // currently it runs every time a node is dragged or anything else is happening
+  // causes error by recreating the connections
   didRender: function(){
-    this.debug("STARTED: onDidRender; connections: ", this.get('connections').length);
+    console.log("STARTED onDidRender");
+    console.log("STARTED: onDidRender; connections: ", this.connections.length);
     // add connections to jsp instance  (this component only gets the connections
     // that belong to the currently visible flow so there's no need to filter or check against visible nodes)
     this.connections.forEach(function(connection){
@@ -118,29 +123,34 @@ export default Component.extend({
       let sourceId = connection.get('sourceId').get('id');
       let targetId = connection.get('targetId').get('id');
 
-      let srcEndpointSelection = this.jspInstance.selectEndpoints({element: sourceId});
-      let sourceEndpoint = null;
-      for (let i=0; i<srcEndpointSelection.length; i++){
-        let endp = srcEndpointSelection.get(i);
-        if (endp.anchor.type == connection.get("sourceAnchorType")) {
-          // found the endpoint we need to attach the connection source to
-          //this.debug("connection add: FOUND ENDPOINT");
-          sourceEndpoint = endp;
+      let existingConnCount = this.jspInstance.getConnections({source: sourceId, target: targetId}).length;
+      //console.log( 'getConnection', this.jspInstance.getConnections({source: sourceId, target: targetId}));
+      if (existingConnCount == 0){
+        let srcEndpointSelection = this.jspInstance.selectEndpoints({element: sourceId});
+        let sourceEndpoint = null;
+        for (let i=0; i<srcEndpointSelection.length; i++){
+          let endp = srcEndpointSelection.get(i);
+          if (endp.anchor.type == connection.get("sourceAnchorType")) {
+            // found the endpoint we need to attach the connection source to
+            //this.debug("connection add: FOUND ENDPOINT");
+            sourceEndpoint = endp;
+          }
         }
-      }
 
-      let tgtEndpointSelection = this.jspInstance.selectEndpoints({element: targetId});
-      let targetEndpoint = null;
-      for (let i=0; i<tgtEndpointSelection.length; i++){
-        let endp = tgtEndpointSelection.get(i);
-        if (endp.anchor.type == connection.get("targetAnchorType")) {
-          // found the endpoint we need to attach the connection target to
-          //this.debug("connection add: FOUND ENDPOINT");
-          targetEndpoint = endp;
+        let tgtEndpointSelection = this.jspInstance.selectEndpoints({element: targetId});
+        let targetEndpoint = null;
+        for (let i=0; i<tgtEndpointSelection.length; i++){
+          let endp = tgtEndpointSelection.get(i);
+          if (endp.anchor.type == connection.get("targetAnchorType")) {
+            // found the endpoint we need to attach the connection target to
+            //this.debug("connection add: FOUND ENDPOINT");
+            targetEndpoint = endp;
+          }
         }
+
+        let newConn = this.jspInstance.connect({source: sourceEndpoint, target: targetEndpoint});
+        newConn.connId = connection.get('id');
       }
-      let newConn = this.jspInstance.connect({source: sourceEndpoint, target: targetEndpoint});
-      newConn.connId = connection.get('id');
     }, this);
 
   },
