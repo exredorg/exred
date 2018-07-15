@@ -295,7 +295,10 @@ define('exred/components/editor-flownav', ['exports'], function (exports) {
 
     //flowNavOpen: null,
     currentFlowId: null,
-    clickedFlow: null,
+    addDialogOpened: null,
+    newFlowName: null,
+    newFlowInfo: null,
+    newFlowService: null,
 
     actions: {
       toggle: function toggle(what) {
@@ -303,7 +306,21 @@ define('exred/components/editor-flownav', ['exports'], function (exports) {
         this.set(what, !current);
       },
       clickOnFlow: function clickOnFlow(flowId) {
-        this.get('state').set('activeFlowId', flowId);
+        var state = this.get('state');
+        state.set('activeFlowId', flowId);
+        state.set('activeNodeId', null);
+      },
+
+      openAddFlow: function openAddFlow(service) {
+        this.debug('action/openAddFlow serviceId', service.id);
+        this.set('newFlowService', service);
+        this.set('addDialogOpened', true);
+      },
+
+      clearNewFlowArgs: function clearNewFlowArgs() {
+        this.set('newFlowName', null);
+        this.set('newFlowInfo', null);
+        this.set('newFlowServiceId', null);
       }
     }
   });
@@ -2581,7 +2598,6 @@ define('exred/components/x-jsplumb', ['exports', 'ember-uuid'], function (export
     // currently it runs every time a node is dragged or anything else is happening
     // causes error by recreating the connections
     didRender: function didRender() {
-      console.log("STARTED onDidRender");
       console.log("STARTED: onDidRender; connections: ", this.connections.length);
       // add connections to jsp instance  (this component only gets the connections
       // that belong to the currently visible flow so there's no need to filter or check against visible nodes)
@@ -2881,11 +2897,11 @@ define('exred/controllers/app/index', ['exports', 'ember-uuid'], function (expor
       this.debug('state', state);
     }),
 
-    currentFlow: Ember.computed('currentFlowId', function () {
-      var cfid = this.get('currentFlowId');
-      var cf = this.model.flows.findBy('id', cfid);
-      return cf;
-    }),
+    //currentFlow: computed('currentFlowId', function(){
+    //  let cfid = this.get('currentFlowId');
+    //  let cf = this.model.flows.findBy('id', cfid);
+    //  return cf;
+    //}),
 
     actions: {
       toggleFlowNav: function toggleFlowNav() {
@@ -2983,14 +2999,14 @@ define('exred/controllers/app/index', ['exports', 'ember-uuid'], function (expor
 
         var dnode = store.createRecord('node', instance);
 
-        this.debug("created node:", dnode.get('id'), dnode.get('name'));
+        this.debug("created node record:", dnode.get('id'), dnode.get('name'));
 
         dnode.save().then(function () {
           _this2.debug("saved node");
         }).catch(function (err) {
           // remove from Store
           store.unloadRecord(dnode);
-          _this2.debug("ERROR failed to create node", err.errors);
+          _this2.debug("ERROR failed to save node", err.errors);
         });
 
         // // Clear any existing error messages
@@ -3009,6 +3025,54 @@ define('exred/controllers/app/index', ['exports', 'ember-uuid'], function (expor
         //   this.get('flashMessages').danger(`Problem creating room: ${data.name}`);
         // });
         //
+      },
+
+      // add a new flow to the current service
+      addFlow: function addFlow(flowName, flowInfo, flowService) {
+        var _this3 = this;
+
+        this.debug('Adding new flow ' + flowName);
+        var store = this.get('store');
+        var state = this.get('state');
+
+        // TODO fix serviceId field naming in flow model 
+        // (it returns the actual service not the id, not sure how ember stores it but the serviceId name creates confusion, the actual service record is needed when creating new flows)
+        var service = flowService || state.get('activeFlow').get('serviceId');
+
+        var flow = {
+          id: (0, _emberUuid.v4)(),
+          name: flowName,
+          info: flowInfo,
+          serviceId: service,
+          nodes: [],
+          connections: []
+        };
+        this.debug("new flow:", flow);
+
+        var flowRec = store.createRecord('flow', flow);
+
+        this.debug("created flow record:", flowRec.get('id'), flowRec.get('name'));
+
+        flowRec.save().then(function () {
+          _this3.debug("saved flow");
+        }).catch(function (err) {
+          _this3.debug("ERROR failed to save flow", err);
+          store.unloadRecord(flowRec);
+        });
+      },
+
+      deleteFlow: function deleteFlow(flowRec) {
+        var _this4 = this;
+
+        this.debug('Deleting flow:', flowRec.name);
+        var paperToaster = this.get('paperToaster');
+
+        flowRec.destroyRecord().then(function () {
+          _this4.debug("deleted flow");
+        }).catch(function (err) {
+          _this4.debug("ERROR failed to delete flow", err);
+          paperToaster.show('Error deleting flow', { duration: 2000, position: "top right" });
+        });
       },
 
       saveNewConfig: function saveNewConfig(newConfig) {
@@ -5959,7 +6023,7 @@ define("exred/templates/app/index", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "VqXK8heJ", "block": "{\"symbols\":[],\"statements\":[[1,[25,\"x-editor\",null,[[\"model\",\"selectedNode\",\"flowNavOpen\",\"currentFlowId\",\"currentFlow\",\"configChanged\",\"toggleFlowNav\",\"addConnection\",\"deleteConnection\",\"saveNewConfig\",\"updateNodePosition\",\"nodeDoubleClick\",\"deleteActive\"],[[20,[\"model\"]],[20,[\"selectedNode\"]],[20,[\"flowNavOpen\"]],[20,[\"currentFlowId\"]],[25,\"readonly\",[[20,[\"currentFlow\"]]],null],[20,[\"configChanged\"]],[25,\"action\",[[19,0,[]],\"toggleFlowNav\"],null],[25,\"action\",[[19,0,[]],\"addConnection\"],null],[25,\"action\",[[19,0,[]],\"deleteConnection\"],null],[25,\"action\",[[19,0,[]],\"saveNewConfig\"],null],[25,\"action\",[[19,0,[]],\"updateNodePosition\"],null],[25,\"action\",[[19,0,[]],\"createDNode\"],null],[25,\"action\",[[19,0,[]],\"deleteActive\"],null]]]],false],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "exred/templates/app/index.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "gJ7elDgO", "block": "{\"symbols\":[],\"statements\":[[1,[25,\"x-editor\",null,[[\"model\",\"selectedNode\",\"flowNavOpen\",\"currentFlowId\",\"currentFlow\",\"configChanged\",\"toggleFlowNav\",\"addConnection\",\"deleteConnection\",\"saveNewConfig\",\"updateNodePosition\",\"nodeDoubleClick\",\"deleteActive\",\"addFlow\",\"deleteFlow\"],[[20,[\"model\"]],[20,[\"selectedNode\"]],[20,[\"flowNavOpen\"]],[20,[\"currentFlowId\"]],[25,\"readonly\",[[20,[\"currentFlow\"]]],null],[20,[\"configChanged\"]],[25,\"action\",[[19,0,[]],\"toggleFlowNav\"],null],[25,\"action\",[[19,0,[]],\"addConnection\"],null],[25,\"action\",[[19,0,[]],\"deleteConnection\"],null],[25,\"action\",[[19,0,[]],\"saveNewConfig\"],null],[25,\"action\",[[19,0,[]],\"updateNodePosition\"],null],[25,\"action\",[[19,0,[]],\"createDNode\"],null],[25,\"action\",[[19,0,[]],\"deleteActive\"],null],[25,\"action\",[[19,0,[]],\"addFlow\"],null],[25,\"action\",[[19,0,[]],\"deleteFlow\"],null]]]],false],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "exred/templates/app/index.hbs" } });
 });
 define("exred/templates/application", ["exports"], function (exports) {
   "use strict";
@@ -6007,7 +6071,7 @@ define("exred/templates/components/editor-flownav", ["exports"], function (expor
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "FdrErO+0", "block": "{\"symbols\":[\"service\",\"flow\",\"controls\",\"menu\",\"content\",\"menu\",\"content\",\"toolbar\",\"&default\"],\"statements\":[[4,\"paper-sidenav-container\",null,[[\"class\"],[\"inner-sidenav\"]],{\"statements\":[[0,\"\\n\"],[4,\"paper-sidenav\",null,[[\"class\",\"name\",\"lockedOpen\"],[\"md-whiteframe-z2\",\"leftnav\",[20,[\"flowNavOpen\"]]]],{\"statements\":[[0,\"\\n\"],[4,\"paper-toolbar\",null,[[\"accent\"],[true]],{\"statements\":[[0,\"      \"],[4,\"paper-toolbar-tools\",null,null,{\"statements\":[[0,\"Flows\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[8]},null],[0,\"\\n\"],[4,\"paper-content\",null,[[\"padding\"],[true]],{\"statements\":[[4,\"each\",[[20,[\"services\"]]],null,{\"statements\":[[0,\"\\n\"],[0,\"          \"],[6,\"strong\"],[7],[1,[19,1,[\"name\"]],false],[8],[0,\"\\n\\n\"],[4,\"paper-menu\",null,null,{\"statements\":[[4,\"component\",[[19,6,[\"trigger\"]]],null,{\"statements\":[[4,\"paper-button\",null,[[\"iconButton\"],[true]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"more vert\"],null],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"component\",[[19,6,[\"content\"]]],[[\"width\"],[2]],{\"statements\":[[4,\"component\",[[19,7,[\"menu-item\"]]],[[\"onClick\"],[\"openSomething\"]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"edit\"],null],false],[6,\"span\"],[7],[0,\"Edit\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"component\",[[19,7,[\"menu-item\"]]],[[\"onClick\"],[\"openSomething\"]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"delete\"],null],false],[6,\"span\"],[7],[0,\"Delete\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n              \"],[1,[18,\"paper-divider\"],false],[0,\"\\n\\n\"],[4,\"component\",[[19,7,[\"menu-item\"]]],[[\"onClick\",\"disabled\"],[\"openSomething\",false]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"add\"],null],false],[6,\"span\"],[7],[0,\"Add Flow\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[7]},null]],\"parameters\":[6]},null],[0,\"\\n\\n\"],[4,\"paper-list\",null,null,{\"statements\":[[4,\"each\",[[19,1,[\"flows\"]]],null,{\"statements\":[[0,\"\\n\"],[4,\"paper-item\",null,[[\"class\",\"onClick\"],[\"md-1-line\",[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"clickedFlow\"]]],null]],null]]],{\"statements\":[[0,\"                \"],[1,[25,\"component\",[[19,3,[\"radio\"]]],[[\"groupValue\",\"value\",\"label\",\"secondary\",\"onChange\"],[[20,[\"currentFlowId\"]],[19,2,[\"id\"]],[19,2,[\"name\"]],true,[25,\"action\",[[19,0,[]],[25,\"queue\",[[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"currentFlowId\"]]],null]],null],[25,\"action\",[[19,0,[]],\"clickOnFlow\",[20,[\"currentFlowId\"]]],null]],null]],null]]]],false],[0,\"\\n\\n                \"],[6,\"div\"],[9,\"class\",\"md-secondary-container\"],[7],[0,\"\\n\"],[4,\"paper-menu\",null,[[\"position\"],[\"target-right target\"]],{\"statements\":[[4,\"component\",[[19,4,[\"trigger\"]]],null,{\"statements\":[[4,\"paper-button\",null,[[\"iconButton\"],[true]],{\"statements\":[[0,\"                        \"],[1,[25,\"paper-icon\",[\"more vert\"],[[\"class\"],[\"md-menu-origin\"]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"component\",[[19,4,[\"content\"]]],[[\"width\"],[2]],{\"statements\":[[4,\"component\",[[19,5,[\"menu-item\"]]],[[\"onClick\"],[\"openSomething\"]],{\"statements\":[[0,\"                        \"],[1,[25,\"paper-icon\",[\"edit\"],[[\"class\"],[\"md-menu-align-target\"]]],false],[0,\" \"],[6,\"span\"],[7],[0,\"Edit\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"component\",[[19,5,[\"menu-item\"]]],[[\"onClick\"],[\"openSomething\"]],{\"statements\":[[0,\"                        \"],[1,[25,\"paper-icon\",[\"delete\"],[[\"class\"],[\"md-menu-align-target\"]]],false],[0,\" \"],[6,\"span\"],[7],[0,\"Delete\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[5]},null]],\"parameters\":[4]},null],[0,\"                \"],[8],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"\\n\"]],\"parameters\":[2]},null]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"paper-content\",null,null,{\"statements\":[[0,\"      \"],[6,\"span\"],[9,\"class\",\"flex\"],[7],[8],[0,\"\\n\"],[4,\"paper-button\",null,[[\"raised\",\"fab\"],[true,true]],{\"statements\":[[0,\"        \"],[1,[25,\"paper-icon\",[\"add\"],null],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"paper-card-content\",null,[[\"class\"],[\"flex\"]],{\"statements\":[[0,\"    \"],[11,9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]},null]],\"hasEval\":false}", "meta": { "moduleName": "exred/templates/components/editor-flownav.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "YLR1FPCk", "block": "{\"symbols\":[\"service\",\"flow\",\"controls\",\"menu\",\"content\",\"menu\",\"content\",\"toolbar\",\"&default\"],\"statements\":[[4,\"paper-sidenav-container\",null,[[\"class\"],[\"inner-sidenav\"]],{\"statements\":[[0,\"\\n\"],[4,\"paper-sidenav\",null,[[\"class\",\"name\",\"lockedOpen\"],[\"md-whiteframe-z2\",\"leftnav\",[20,[\"flowNavOpen\"]]]],{\"statements\":[[0,\"\\n\"],[4,\"paper-toolbar\",null,[[\"accent\"],[true]],{\"statements\":[[0,\"      \"],[4,\"paper-toolbar-tools\",null,null,{\"statements\":[[0,\"Flows\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[8]},null],[0,\"\\n\"],[4,\"paper-content\",null,[[\"padding\"],[true]],{\"statements\":[[4,\"each\",[[20,[\"services\"]]],null,{\"statements\":[[0,\"\\n\"],[0,\"          \"],[6,\"strong\"],[7],[1,[19,1,[\"name\"]],false],[8],[0,\"\\n\\n\"],[4,\"paper-menu\",null,null,{\"statements\":[[4,\"component\",[[19,6,[\"trigger\"]]],null,{\"statements\":[[4,\"paper-button\",null,[[\"iconButton\"],[true]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"more vert\"],null],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"component\",[[19,6,[\"content\"]]],[[\"width\"],[2]],{\"statements\":[[4,\"component\",[[19,7,[\"menu-item\"]]],[[\"onClick\",\"disabled\"],[\"openSomething\",true]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"edit\"],null],false],[6,\"span\"],[7],[0,\"Edit\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"component\",[[19,7,[\"menu-item\"]]],[[\"onClick\",\"disabled\"],[\"openSomething\",true]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"delete\"],null],false],[6,\"span\"],[7],[0,\"Delete\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n              \"],[1,[18,\"paper-divider\"],false],[0,\"\\n\\n\"],[4,\"component\",[[19,7,[\"menu-item\"]]],[[\"onClick\",\"disabled\"],[[25,\"action\",[[19,0,[]],\"openAddFlow\",[19,1,[]]],null],false]],{\"statements\":[[0,\"                \"],[1,[25,\"paper-icon\",[\"add\"],null],false],[6,\"span\"],[7],[0,\"Add Flow\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[7]},null]],\"parameters\":[6]},null],[0,\"\\n\\n\"],[4,\"paper-list\",null,null,{\"statements\":[[4,\"each\",[[19,1,[\"flows\"]]],null,{\"statements\":[[0,\"\\n\"],[4,\"paper-item\",null,[[\"class\"],[\"md-1-line\"]],{\"statements\":[[0,\"                \"],[1,[25,\"component\",[[19,3,[\"radio\"]]],[[\"groupValue\",\"value\",\"label\",\"secondary\",\"onChange\"],[[20,[\"currentFlowId\"]],[19,2,[\"id\"]],[19,2,[\"name\"]],true,[25,\"action\",[[19,0,[]],[25,\"queue\",[[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"currentFlowId\"]]],null]],null],[25,\"action\",[[19,0,[]],\"clickOnFlow\",[20,[\"currentFlowId\"]]],null]],null]],null]]]],false],[0,\"\\n\\n                \"],[6,\"div\"],[9,\"class\",\"md-secondary-container\"],[7],[0,\"\\n\"],[4,\"paper-menu\",null,[[\"position\"],[\"target-right target\"]],{\"statements\":[[4,\"component\",[[19,4,[\"trigger\"]]],null,{\"statements\":[[4,\"paper-button\",null,[[\"iconButton\"],[true]],{\"statements\":[[0,\"                        \"],[1,[25,\"paper-icon\",[\"more vert\"],[[\"class\"],[\"md-menu-origin\"]]],false],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null],[4,\"component\",[[19,4,[\"content\"]]],[[\"width\"],[2]],{\"statements\":[[4,\"component\",[[19,5,[\"menu-item\"]]],[[\"onClick\",\"disabled\"],[\"openSomething\",true]],{\"statements\":[[0,\"                        \"],[1,[25,\"paper-icon\",[\"edit\"],[[\"class\"],[\"md-menu-align-target\"]]],false],[0,\" \"],[6,\"span\"],[7],[0,\"Edit\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"component\",[[19,5,[\"menu-item\"]]],[[\"onClick\",\"disabled\"],[[25,\"action\",[[19,0,[]],[20,[\"deleteFlow\"]],[19,2,[]]],null],false]],{\"statements\":[[0,\"                        \"],[1,[25,\"paper-icon\",[\"delete\"],[[\"class\"],[\"md-menu-align-target\"]]],false],[0,\" \"],[6,\"span\"],[7],[0,\"Delete\"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[5]},null]],\"parameters\":[4]},null],[0,\"                \"],[8],[0,\"\\n\"]],\"parameters\":[3]},null],[0,\"\\n\"]],\"parameters\":[2]},null]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[1]},null]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"paper-content\",null,null,{\"statements\":[[0,\"      \"],[6,\"div\"],[9,\"class\",\"layout-row\"],[7],[0,\"\\n        \"],[6,\"span\"],[9,\"class\",\"flex-70\"],[7],[8],[0,\"\\n\"],[4,\"paper-button\",null,[[\"raised\",\"fab\",\"onClick\"],[true,true,[25,\"action\",[[19,0,[]],[25,\"toggle\",[\"addDialogOpened\",[19,0,[]]],null]],null]]],{\"statements\":[[0,\"          \"],[1,[25,\"paper-icon\",[\"add\"],null],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"        \"],[6,\"span\"],[9,\"class\",\"flex\"],[7],[8],[0,\"\\n      \"],[8],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"paper-card-content\",null,[[\"class\"],[\"flex\"]],{\"statements\":[[0,\"    \"],[11,9],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\\n\"],[4,\"if\",[[20,[\"addDialogOpened\"]]],null,{\"statements\":[[4,\"paper-dialog\",null,[[\"fullscreen\",\"clickOutsideToClose\",\"onClose\"],[[20,[\"fullscreen\"]],false,[25,\"action\",[[19,0,[]],[25,\"toggle\",[\"addDialogOpened\",[19,0,[]]],null]],null]]],{\"statements\":[[4,\"paper-dialog-content\",null,null,{\"statements\":[[0,\"        \"],[6,\"h2\"],[7],[0,\"Create New Flow\"],[8],[0,\"\\n        \\n        \"],[1,[25,\"paper-input\",null,[[\"label\",\"value\",\"onChange\",\"required\"],[\"Name\",[20,[\"newFlowName\"]],[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"newFlowName\"]]],null]],null],true]]],false],[0,\"\\n        \\n        \"],[1,[25,\"paper-input\",null,[[\"textarea\",\"block\",\"label\",\"maxlength\",\"passThru\",\"value\",\"onChange\"],[true,true,\"Info\",750,[25,\"hash\",null,[[\"rows\",\"cols\",\"maxRows\"],[5,50,15]]],[20,[\"newFlowInfo\"]],[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"newFlowInfo\"]]],null]],null]]]],false],[0,\"\\n        \\n        \"],[6,\"div\"],[9,\"class\",\"layout-row\"],[7],[0,\"\\n          \"],[4,\"paper-button\",null,[[\"raised\",\"primary\",\"onClick\"],[true,true,[25,\"action\",[[19,0,[]],[25,\"queue\",[[25,\"action\",[[19,0,[]],[20,[\"addFlow\"]],[20,[\"newFlowName\"]],[20,[\"newFlowInfo\"]],[20,[\"newFlowService\"]]],null],[25,\"action\",[[19,0,[]],[25,\"toggle\",[\"addDialogOpened\",[19,0,[]]],null]],null],[25,\"action\",[[19,0,[]],\"clearNewFlowArgs\"],null]],null]],null]]],{\"statements\":[[0,\"Create\"]],\"parameters\":[]},null],[0,\"\\n          \"],[6,\"span\"],[9,\"class\",\"flex\"],[7],[8],[0,\"\\n          \"],[4,\"paper-button\",null,[[\"raised\",\"primary\",\"onClick\"],[true,false,[25,\"action\",[[19,0,[]],[25,\"queue\",[[25,\"action\",[[19,0,[]],[25,\"toggle\",[\"addDialogOpened\",[19,0,[]]],null]],null],[25,\"action\",[[19,0,[]],\"clearNewFlowArgs\"],null]],null]],null]]],{\"statements\":[[0,\"Cancel\"]],\"parameters\":[]},null],[0,\"\\n        \"],[8],[0,\"\\n\"]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"parameters\":[]},null]],\"hasEval\":false}", "meta": { "moduleName": "exred/templates/components/editor-flownav.hbs" } });
 });
 define("exred/templates/components/editor-flows", ["exports"], function (exports) {
   "use strict";
@@ -6159,7 +6223,7 @@ define("exred/templates/components/x-editor", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "8ixwXeL9", "block": "{\"symbols\":[\"current\",\"tabs\"],\"statements\":[[1,[18,\"paper-toaster\"],false],[0,\"\\n\\n\"],[1,[25,\"editor-toolbar\",null,[[\"toggleFlowNav\",\"flowNavOpen\",\"selectedNodeId\",\"currentFlowId\"],[[25,\"action\",[[19,0,[]],[20,[\"toggleFlowNav\"]]],null],[25,\"readonly\",[[20,[\"flowNavOpen\"]]],null],[20,[\"selectedNode\",\"id\"]],[20,[\"currentFlowId\"]]]]],false],[0,\"\\n\\n\"],[4,\"editor-flownav\",null,[[\"flowNavOpen\",\"currentFlowId\",\"services\",\"flows\"],[[25,\"readonly\",[[20,[\"flowNavOpen\"]]],null],[20,[\"state\",\"activeFlowId\"]],[20,[\"model\",\"services\"]],[20,[\"model\",\"flows\"]]]],{\"statements\":[[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"layout-row\"],[7],[0,\"\\n    \"],[6,\"div\"],[9,\"class\",\"flex-10\"],[7],[0,\"\\n      \"],[1,[25,\"editor-nodelist\",null,[[\"nodelist\",\"nodeDoubleClick\"],[[25,\"filter-by\",[\"isPrototype\",true,[20,[\"model\",\"nodes\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"nodeDoubleClick\"]]],null]]]],false],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"flex-70\"],[7],[0,\"\\n      \"],[6,\"div\"],[9,\"class\",\"layout-column\"],[7],[0,\"\\n        \"],[6,\"div\"],[9,\"class\",\"flex-90\"],[7],[0,\"\\n          \"],[1,[25,\"editor-flows\",null,[[\"nodeInstances\",\"connections\",\"updateNodePosition\",\"addConnection\",\"deleteConnection\"],[[20,[\"state\",\"activeFlow\",\"nodes\"]],[20,[\"state\",\"activeFlow\",\"connections\"]],[25,\"action\",[[19,0,[]],[20,[\"updateNodePosition\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"addConnection\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"deleteConnection\"]]],null]]]],false],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"flex-20\"],[7],[0,\"\\n\\n\"],[4,\"paper-tabs\",null,[[\"primary\",\"center\",\"stretch\",\"borderBottom\",\"selected\",\"onChange\"],[false,false,true,true,[20,[\"selectedTab\"]],[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"selectedTab\"]]],null]],null]]],{\"statements\":[[0,\"        \"],[4,\"component\",[[19,2,[\"tab\"]]],null,{\"statements\":[[0,\"Info\"]],\"parameters\":[]},null],[0,\"\\n        \"],[4,\"component\",[[19,2,[\"tab\"]]],null,{\"statements\":[[0,\"Config\"]],\"parameters\":[]},null],[0,\"\\n        \"],[4,\"component\",[[19,2,[\"tab\"]]],null,{\"statements\":[[0,\"Debug\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"\\n\"],[4,\"liquid-bind\",[[25,\"hash\",null,[[\"tab\"],[[20,[\"selectedTab\"]]]]]],[[\"class\"],[\"md-padding tab-animation\"]],{\"statements\":[[0,\"\\n\"],[4,\"if\",[[25,\"eq\",[[19,1,[\"tab\"]],0],null]],null,{\"statements\":[[0,\"          \"],[1,[25,\"x-info-tab\",null,[[\"selectedNode\",\"deleteActive\"],[[20,[\"selectedNode\"]],[25,\"action\",[[19,0,[]],[20,[\"deleteActive\"]]],null]]]],false],[0,\" \\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,\"eq\",[[19,1,[\"tab\"]],1],null]],null,{\"statements\":[[0,\"          \"],[1,[25,\"x-config-tab\",null,[[\"selectedNode\",\"deleteActive\",\"saveNewConfig\"],[[20,[\"selectedNode\"]],[25,\"action\",[[19,0,[]],[20,[\"deleteActive\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"saveNewConfig\"]]],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,\"eq\",[[19,1,[\"tab\"]],2],null]],null,{\"statements\":[[0,\"          \"],[1,[18,\"x-debug-tab\"],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"\\n    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "exred/templates/components/x-editor.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "jlTGPM8z", "block": "{\"symbols\":[\"current\",\"tabs\"],\"statements\":[[1,[18,\"paper-toaster\"],false],[0,\"\\n\\n\"],[1,[25,\"editor-toolbar\",null,[[\"toggleFlowNav\",\"flowNavOpen\",\"selectedNodeId\",\"currentFlowId\"],[[25,\"action\",[[19,0,[]],[20,[\"toggleFlowNav\"]]],null],[25,\"readonly\",[[20,[\"flowNavOpen\"]]],null],[20,[\"selectedNode\",\"id\"]],[20,[\"currentFlowId\"]]]]],false],[0,\"\\n\\n\"],[4,\"editor-flownav\",null,[[\"flowNavOpen\",\"currentFlowId\",\"services\",\"flows\",\"addFlow\",\"deleteFlow\"],[[25,\"readonly\",[[20,[\"flowNavOpen\"]]],null],[20,[\"state\",\"activeFlowId\"]],[20,[\"model\",\"services\"]],[20,[\"model\",\"flows\"]],[25,\"action\",[[19,0,[]],[20,[\"addFlow\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"deleteFlow\"]]],null]]],{\"statements\":[[0,\"\\n  \"],[6,\"div\"],[9,\"class\",\"layout-row\"],[7],[0,\"\\n    \"],[6,\"div\"],[9,\"class\",\"flex-10\"],[7],[0,\"\\n      \"],[1,[25,\"editor-nodelist\",null,[[\"nodelist\",\"nodeDoubleClick\"],[[25,\"filter-by\",[\"isPrototype\",true,[20,[\"model\",\"nodes\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"nodeDoubleClick\"]]],null]]]],false],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"flex-70\"],[7],[0,\"\\n      \"],[6,\"div\"],[9,\"class\",\"layout-column\"],[7],[0,\"\\n        \"],[6,\"div\"],[9,\"class\",\"flex-90\"],[7],[0,\"\\n          \"],[1,[25,\"editor-flows\",null,[[\"nodeInstances\",\"connections\",\"updateNodePosition\",\"addConnection\",\"deleteConnection\"],[[20,[\"state\",\"activeFlow\",\"nodes\"]],[20,[\"state\",\"activeFlow\",\"connections\"]],[25,\"action\",[[19,0,[]],[20,[\"updateNodePosition\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"addConnection\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"deleteConnection\"]]],null]]]],false],[0,\"\\n        \"],[8],[0,\"\\n      \"],[8],[0,\"\\n    \"],[8],[0,\"\\n\\n    \"],[6,\"div\"],[9,\"class\",\"flex-20\"],[7],[0,\"\\n\\n\"],[4,\"paper-tabs\",null,[[\"primary\",\"center\",\"stretch\",\"borderBottom\",\"selected\",\"onChange\"],[false,false,true,true,[20,[\"selectedTab\"]],[25,\"action\",[[19,0,[]],[25,\"mut\",[[20,[\"selectedTab\"]]],null]],null]]],{\"statements\":[[0,\"        \"],[4,\"component\",[[19,2,[\"tab\"]]],null,{\"statements\":[[0,\"Info\"]],\"parameters\":[]},null],[0,\"\\n        \"],[4,\"component\",[[19,2,[\"tab\"]]],null,{\"statements\":[[0,\"Config\"]],\"parameters\":[]},null],[0,\"\\n        \"],[4,\"component\",[[19,2,[\"tab\"]]],null,{\"statements\":[[0,\"Debug\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[2]},null],[0,\"\\n\"],[4,\"liquid-bind\",[[25,\"hash\",null,[[\"tab\"],[[20,[\"selectedTab\"]]]]]],[[\"class\"],[\"md-padding tab-animation\"]],{\"statements\":[[0,\"\\n\"],[4,\"if\",[[25,\"eq\",[[19,1,[\"tab\"]],0],null]],null,{\"statements\":[[0,\"          \"],[1,[25,\"x-info-tab\",null,[[\"selectedNode\",\"deleteActive\"],[[20,[\"selectedNode\"]],[25,\"action\",[[19,0,[]],[20,[\"deleteActive\"]]],null]]]],false],[0,\" \\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,\"eq\",[[19,1,[\"tab\"]],1],null]],null,{\"statements\":[[0,\"          \"],[1,[25,\"x-config-tab\",null,[[\"selectedNode\",\"deleteActive\",\"saveNewConfig\"],[[20,[\"selectedNode\"]],[25,\"action\",[[19,0,[]],[20,[\"deleteActive\"]]],null],[25,\"action\",[[19,0,[]],[20,[\"saveNewConfig\"]]],null]]]],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"],[4,\"if\",[[25,\"eq\",[[19,1,[\"tab\"]],2],null]],null,{\"statements\":[[0,\"          \"],[1,[18,\"x-debug-tab\"],false],[0,\"\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"parameters\":[1]},null],[0,\"\\n    \"],[8],[0,\"\\n  \"],[8],[0,\"\\n\\n\"]],\"parameters\":[]},null],[0,\"\\n\"]],\"hasEval\":false}", "meta": { "moduleName": "exred/templates/components/x-editor.hbs" } });
 });
 define("exred/templates/components/x-info-tab", ["exports"], function (exports) {
   "use strict";
@@ -6697,7 +6761,7 @@ catch(err) {
 
 if (typeof FastBoot === 'undefined') {
   if (!runningTests) {
-    require('exred/app')['default'].create({"LOG_RESOLVER":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"exred","version":"0.0.0+50123e84"});
+    require('exred/app')['default'].create({"LOG_RESOLVER":true,"LOG_TRANSITIONS":true,"LOG_TRANSITIONS_INTERNAL":true,"LOG_VIEW_LOOKUPS":true,"name":"exred","version":"0.0.0+ff0b5b0c"});
   }
 }
 

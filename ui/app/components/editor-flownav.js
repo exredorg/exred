@@ -7,7 +7,10 @@ export default Component.extend({
   
   //flowNavOpen: null,
   currentFlowId: null,
-  clickedFlow: null,
+  addDialogOpened: null,
+  newFlowName: null,
+  newFlowInfo: null,
+  newFlowService: null,
 
   actions:{
     toggle: function(what){
@@ -15,7 +18,21 @@ export default Component.extend({
       this.set(what, !current);
     },
     clickOnFlow: function(flowId){
-      this.get('state').set('activeFlowId', flowId);
+      let state = this.get('state');
+      state.set('activeFlowId', flowId);
+      state.set('activeNodeId', null);
+    },
+    
+    openAddFlow: function(service){
+      this.debug('action/openAddFlow serviceId', service.id);
+      this.set('newFlowService', service);
+      this.set('addDialogOpened', true);
+    },
+    
+    clearNewFlowArgs: function(){
+      this.set('newFlowName', null);
+      this.set('newFlowInfo', null);
+      this.set('newFlowServiceId', null);
     }
   }
 });

@@ -11,14 +11,23 @@ defmodule ExredUIWeb.FlowController do
     render(conn, "index.json-api", data: flows)
   end
 
-  def create(conn, %{"flow" => flow_params}) do
-    with {:ok, %Flow{} = flow} <- Editor.create_flow(flow_params) do
+
+  def create(conn, %{"data" => %{"type" => "flows", "id" => id,
+  "attributes" => attributes, "relationships" => relationships}}) do
+    flow_params = attributes
+    |> Map.put("id", id)
+    |> Map.put("service_id", relationships["service_id"]["data"]["id"])
+
+    IO.inspect flow_params, label: "FLOW PARAMS"
+    
+    with {:ok, %Flow{} = flow} <- Editor.create_flow( flow_params ) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", flow_path(conn, :show, flow))
       |> render("show.json-api", data: flow)
     end
   end
+
 
   def show(conn, %{"id" => id}) do
     flow = Editor.get_flow!(id)

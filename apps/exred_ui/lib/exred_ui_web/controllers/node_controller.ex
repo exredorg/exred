@@ -47,16 +47,6 @@ defmodule ExredUIWeb.NodeController do
   end
 
 
-
-  # def create(conn, %{"node" => node_params}) do
-  #   with {:ok, %Node{} = node} <- Editor.create_node(node_params) do
-  #     conn
-  #     |> put_status(:created)
-  #     |> put_resp_header("location", node_path(conn, :show, node))
-  #     |> render("show.json-api", data: node)
-  #   end
-  # end
-
   def show(conn, %{"id" => id}) do
     node = Editor.get_node!(id)
     render(conn, "show.json-api", data: node)
@@ -72,14 +62,6 @@ defmodule ExredUIWeb.NodeController do
     end
   end
 
-
-  # def update(conn, %{"id" => id, "node" => node_params}) do
-  #   node = Editor.get_node!(id)
-  #
-  #   with {:ok, %Node{} = node} <- Editor.update_node(node, node_params) do
-  #     render(conn, "show.json-api", data: node)
-  #   end
-  # end
 
   def delete(conn, %{"id" => id}) do
     node = Editor.get_node!(id)

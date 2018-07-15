@@ -24,7 +24,7 @@ defmodule ExredUI.Editor.Flow do
   @doc false
   def changeset(%Flow{} = flow, attrs) do
     flow
-    |> cast(attrs, [:name, :type, :info, :config])
-    |> validate_required([:name, :type, :info, :config])
+    |> cast(attrs, [:id, :service_id, :name, :type, :info, :config])
+    |> validate_required([:id, :service_id, :name, :info])
   end
 end

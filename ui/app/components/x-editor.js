@@ -6,5 +6,5 @@ export default Component.extend({
   state: service('global-state'),
   
   currentFlowId: null,
-  currentFlow: null,
+  currentFlow: null
 });

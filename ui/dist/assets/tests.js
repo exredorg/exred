@@ -122,7 +122,7 @@ define('exred/tests/app.lint-test', [], function () {
 
   QUnit.test('controllers/app/index.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'controllers/app/index.js should pass ESLint\n\n');
+    assert.ok(false, 'controllers/app/index.js should pass ESLint\n\n2:10 - \'computed\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('initializers/debug-helpers.js', function (assert) {

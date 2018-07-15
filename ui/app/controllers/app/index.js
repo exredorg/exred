@@ -47,11 +47,11 @@ export default Controller.extend({
     this.debug('state', state);
   }),
 
-  currentFlow: computed('currentFlowId', function(){
-    let cfid = this.get('currentFlowId');
-    let cf = this.model.flows.findBy('id', cfid);
-    return cf;
-  }),
+  //currentFlow: computed('currentFlowId', function(){
+  //  let cfid = this.get('currentFlowId');
+  //  let cf = this.model.flows.findBy('id', cfid);
+  //  return cf;
+  //}),
 
   actions: {
     toggleFlowNav: function(){
@@ -149,14 +149,14 @@ export default Controller.extend({
 
       let dnode = store.createRecord('node', instance);
 
-      this.debug("created node:", dnode.get('id'),dnode.get('name'));
+      this.debug("created node record:", dnode.get('id'),dnode.get('name'));
 
       dnode.save().then(() => {
         this.debug("saved node");
       }).catch((err) => {
         // remove from Store
         store.unloadRecord(dnode);
-        this.debug("ERROR failed to create node", err.errors);
+        this.debug("ERROR failed to save node", err.errors);
       });
 
 
@@ -177,6 +177,50 @@ export default Controller.extend({
       // });
       //
 
+    },
+    
+    // add a new flow to the current service
+    addFlow: function(flowName, flowInfo, flowService) {
+      this.debug('Adding new flow ' + flowName);
+      let store = this.get('store');
+      let state = this.get('state');
+      
+      // TODO fix serviceId field naming in flow model 
+      // (it returns the actual service not the id, not sure how ember stores it but the serviceId name creates confusion, the actual service record is needed when creating new flows)
+      let service = flowService || state.get('activeFlow').get('serviceId');
+      
+      let flow = {
+        id: v4(),
+        name: flowName,
+        info: flowInfo,
+        serviceId: service,
+        nodes: [],
+        connections: []
+      }
+      this.debug("new flow:", flow);
+      
+      let flowRec = store.createRecord('flow', flow);
+
+      this.debug("created flow record:", flowRec.get('id'),flowRec.get('name'));
+
+      flowRec.save().then(() => {
+        this.debug("saved flow");
+      }).catch((err) => {
+        this.debug("ERROR failed to save flow", err);
+        store.unloadRecord(flowRec);
+      });
+    },
+    
+    deleteFlow: function(flowRec) {
+      this.debug('Deleting flow:', flowRec.name);
+      let paperToaster = this.get('paperToaster');
+      
+      flowRec.destroyRecord().then(() => {
+        this.debug("deleted flow");
+      }).catch((err) => {
+        this.debug("ERROR failed to delete flow", err);
+        paperToaster.show('Error deleting flow', {duration: 2000, position: "top right"});
+      });
     },
 
     saveNewConfig: function(newConfig) {

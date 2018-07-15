@@ -114,7 +114,6 @@ export default Component.extend({
   // currently it runs every time a node is dragged or anything else is happening
   // causes error by recreating the connections
   didRender: function(){
-    console.log("STARTED onDidRender");
     console.log("STARTED: onDidRender; connections: ", this.connections.length);
     // add connections to jsp instance  (this component only gets the connections
     // that belong to the currently visible flow so there's no need to filter or check against visible nodes)

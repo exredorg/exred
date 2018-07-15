@@ -23,17 +23,17 @@
               {{/paper-button}}
             {{/menu.trigger}}
             {{#menu.content width=2 as |content|}}
-              {{#content.menu-item onClick="openSomething"}}
+              {{#content.menu-item onClick="openSomething" disabled=true}}
                 {{paper-icon "edit"}}<span>Edit</span>
               {{/content.menu-item}}
 
-              {{#content.menu-item onClick="openSomething"}}
+              {{#content.menu-item onClick="openSomething" disabled=true}}
                 {{paper-icon "delete"}}<span>Delete</span>
               {{/content.menu-item}}
 
               {{paper-divider}}
 
-              {{#content.menu-item onClick="openSomething" disabled=false}}
+              {{#content.menu-item onClick=(action 'openAddFlow' service) disabled=false}}
                 {{paper-icon "add"}}<span>Add Flow</span>
               {{/content.menu-item}}
 
@@ -45,7 +45,7 @@
             {{#each  service.flows as |flow|}}
 
               {{!-- FLOW --}}
-              {{#paper-item class="md-1-line" onClick=(action (mut clickedFlow)) as |controls|}}
+              {{#paper-item class="md-1-line" as |controls|}}
                 {{controls.radio
                   groupValue=currentFlowId
                   value=flow.id
@@ -61,11 +61,11 @@
                       {{/paper-button}}
                     {{/menu.trigger}}
                     {{#menu.content width=2 as |content|}}
-                      {{#content.menu-item onClick="openSomething"}}
+                      {{#content.menu-item onClick="openSomething" disabled=true}}
                         {{paper-icon "edit" class="md-menu-align-target"}} <span>Edit</span>
                       {{/content.menu-item}}
 
-                      {{#content.menu-item onClick="openSomething"}}
+                      {{#content.menu-item onClick=(action deleteFlow flow) disabled=false}}
                         {{paper-icon "delete" class="md-menu-align-target"}} <span>Delete</span>
                       {{/content.menu-item}}
 
@@ -81,10 +81,13 @@
     {{/paper-content}}
 
     {{#paper-content}}
-      <span class="flex"></span>
-      {{#paper-button raised=true fab=true}}
-        {{paper-icon "add"}}
-      {{/paper-button}}
+      <div class="layout-row">
+        <span class="flex-70"></span>
+        {{#paper-button raised=true fab=true onClick=(action (toggle "addDialogOpened" this))}}
+          {{paper-icon "add"}}
+        {{/paper-button}}
+        <span class="flex"></span>
+      </div>
     {{/paper-content}}
 
   {{/paper-sidenav}}
@@ -94,3 +97,29 @@
   {{/paper-card-content}}
 
 {{/paper-sidenav-container}}
+
+
+{{#if addDialogOpened}}
+    {{#paper-dialog fullscreen=fullscreen clickOutsideToClose=false onClose=(action (toggle "addDialogOpened" this))}}
+      {{#paper-dialog-content}}
+        <h2>Create New Flow</h2>
+        
+        {{paper-input label="Name" value=newFlowName onChange=(action (mut newFlowName)) required=true}}
+        
+        {{paper-input 
+          textarea=true 
+          block=true 
+          label="Info" 
+          maxlength=750 
+          passThru=(hash rows=5 cols=50 maxRows=15)
+          value=newFlowInfo
+          onChange=(action (mut newFlowInfo))}}
+        
+        <div class="layout-row">
+          {{#paper-button raised=true primary=true onClick=(action (queue (action addFlow newFlowName newFlowInfo newFlowService)(action (toggle "addDialogOpened" this))(action 'clearNewFlowArgs') ))}}Create{{/paper-button}}
+          <span class="flex"></span>
+          {{#paper-button raised=true primary=false onClick=(action (queue (action (toggle "addDialogOpened" this))(action 'clearNewFlowArgs') ))}}Cancel{{/paper-button}}
+        </div>
+    {{/paper-dialog-content}}
+    {{/paper-dialog}}
+{{/if}}
