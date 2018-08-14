@@ -22,5 +22,17 @@ defmodule Exred.Umbrella.Mixfile do
         {:conform, "~> 2.2"}
       ]
   end
-
+  
+  
+  defp package do
+    %{
+      licenses: ["MIT"],
+      maintainers: ["Zsolt Keszthelyi"],
+      links: %{
+        "GitHub" => "https://github.com/exredorg/exred",
+        "Exred" => "http://exred.org"
+      },
+      files: ["lib", "mix.exs", "README.md", "LICENSE"]
+    }
+  end
 end

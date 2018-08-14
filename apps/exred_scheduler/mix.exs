@@ -26,27 +26,28 @@ defmodule Exred.Scheduler.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:exred_library, git: "git@bitbucket.org:zsolt001/exred_library.git"},
+      {:exred_library, "~> 0.1.11"},
+      {:ex_doc, "~> 0.18.0", only: :dev, runtime: false}
       {:wobserver, "~> 0.1"}
     ] ++ nodes()
   end
   
   defp nodes do
     [
-      {:exred_node_aws_iot_daemon,          git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_daemon.git"},
-      {:exred_node_aws_iot_thingshadow_in,  git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_in.git"},
-      {:exred_node_aws_iot_thingshadow_out, git: "git@bitbucket.org:zsolt001/exred_node_aws_iot_thingshadow_out.git"},
-      {:exred_node_debug,                   git: "git@bitbucket.org:zsolt001/exred_node_debug.git"},
-      {:exred_node_gpio_in,                 git: "git@bitbucket.org:zsolt001/exred_node_gpio_in.git"},
-      {:exred_node_gpio_out,                git: "git@bitbucket.org:zsolt001/exred_node_gpio_out.git"},
-      {:exred_node_multiply,                git: "git@bitbucket.org:zsolt001/exred_node_multiply.git"},
-      {:exred_node_redis_daemon,            git: "git@bitbucket.org:zsolt001/exred_node_redis_daemon.git"},
-      {:exred_node_redis_in,                git: "git@bitbucket.org:zsolt001/exred_node_redis_in.git"},
-      {:exred_node_redis_out,               git: "git@bitbucket.org:zsolt001/exred_node_redis_out.git"},
-      {:exred_node_suppress,                git: "git@bitbucket.org:zsolt001/exred_node_suppress.git"},
-      {:exred_node_trigger,                 git: "git@bitbucket.org:zsolt001/exred_node_trigger.git"},
-      {:exred_node_rpiphoto,                git: "git@bitbucket.org:zsolt001/exred_node_rpiphoto.git"},
-      {:exred_node_shell,                   git: "git@bitbucket.org:zsolt001/exred_node_shell.git"}
+      {:exred_node_aws_iot_daemon,          "~> 0.1.0"},
+      {:exred_node_aws_iot_thingshadow_in,  "~> 0.1.0"},
+      {:exred_node_aws_iot_thingshadow_out, "~> 0.1.0"},
+      {:exred_node_debug,                   "~> 0.1.0"},
+      {:exred_node_gpio_in,                 "~> 0.1.0"},
+      {:exred_node_gpio_out,                "~> 0.1.0"},
+      {:exred_node_function,                "~> 0.1.0"},
+      {:exred_node_redis_daemon,            "~> 0.1.0"},
+      {:exred_node_redis_in,                "~> 0.1.0"},
+      {:exred_node_redis_out,               "~> 0.1.0"},
+      {:exred_node_suppress,                "~> 0.1.0"},
+      {:exred_node_trigger,                 "~> 0.1.0"},
+      {:exred_node_rpiphoto,                "~> 0.1.0"},
+      {:exred_node_shell,                   "~> 0.1.0"},
     ]
   end
 end
