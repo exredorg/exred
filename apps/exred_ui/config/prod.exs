@@ -24,6 +24,16 @@ config :exred_ui, ExredUIWeb.Endpoint,
   root: ".",
   version: Application.spec(:exred_ui, :vsn)
 
+# Configure your database
+config :exred_ui, ExredUI.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "exred_user",
+  password: "hello",
+  database: "exred_ui_dev",
+  hostname: "localhost_ui_prod",
+  port: 5432,
+  pool_size: 10
+
 # Do not print debug messages in production
 config :logger, level: :info
 

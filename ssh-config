@@ -1,5 +1,0 @@
-Host *
-  StrictHostKeyChecking no
-  AddKeysToAgent yes
-  IdentityFile /root/.ssh/id_rsa_github
-

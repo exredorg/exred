@@ -6,11 +6,12 @@ defmodule Exred.Umbrella.Mixfile do
       version: "0.1.5",
       apps_path: "apps",
       start_permanent: Mix.env == :prod,
+      package: package(),
       deps: deps()
     ]
   end
 
-  
+
   # Dependencies listed here are available only for this
   # project and cannot be accessed from applications inside
   # the apps folder.
@@ -22,8 +23,8 @@ defmodule Exred.Umbrella.Mixfile do
         {:conform, "~> 2.2"}
       ]
   end
-  
-  
+
+
   defp package do
     %{
       licenses: ["MIT"],

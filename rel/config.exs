@@ -49,24 +49,29 @@ end
 release :exred do
   set version: "0.1.5"
   set applications: [
-    :runtime_tools,
     exred: :permanent,
     exred_ui: :permanent,
-    exred_node_aws_iot_daemon: :permanent,
-    exred_node_aws_iot_thingshadow_in: :permanent,
-    exred_node_aws_iot_thingshadow_out: :permanent,
-    exred_node_debug: :permanent,
-    exred_node_gpio_in: :permanent,
-    exred_node_gpio_out: :permanent,
-    exred_node_redis_daemon: :permanent,
-    exred_node_redis_in: :permanent,
-    exred_node_redis_out: :permanent,
-    exred_node_suppress: :permanent,
-    exred_node_trigger: :permanent,
-    exred_node_multiply: :permanent,
-    exred_node_shell: :permanent,
-    exred_node_rpiphoto: :permanent,
-    exred_scheduler: :permanent
+    exred_scheduler: :permanent,
   ]
 end
-
+#
+#     :runtime_tools,
+# 
+#     exred_node_aws_iot_daemon: :permanent,
+#     exred_node_aws_iot_thingshadow_in: :permanent,
+#     exred_node_aws_iot_thingshadow_out: :permanent,
+#     exred_node_debug: :permanent,
+#     exred_node_gpio_in: :permanent,
+#     exred_node_gpio_out: :permanent,
+#     exred_node_redis_daemon: :permanent,
+#     exred_node_redis_in: :permanent,
+#     exred_node_redis_out: :permanent,
+#     exred_node_suppress: :permanent,
+#     exred_node_trigger: :permanent,
+#     exred_node_multiply: :permanent,
+#     exred_node_shell: :permanent,
+#     exred_node_rpiphoto: :permanent,
+#
+#   ]
+# end
+#
