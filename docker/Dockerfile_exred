@@ -2,9 +2,6 @@
 #################################
 FROM elixir:1.5 as builder
 
-COPY ssh-id_rsa_github /root/.ssh/id_rsa_github
-COPY ssh-config /root/.ssh/config
-
 WORKDIR /exred
 
 ENV MIX_ENV=prod
@@ -12,7 +9,6 @@ ENV MIX_ENV=prod
 COPY mix.exs mix.lock ./
 COPY config config
 COPY apps apps
-COPY certs certs
 COPY ui/dist ui/dist
 COPY rel rel
 
@@ -51,7 +47,7 @@ COPY --from=builder /exred/_build/prod/rel/exred/releases/${VERSION}/exred.tar.g
 RUN tar zxf exred.tar.gz && rm exred.tar.gz
 RUN chown -R root ./releases
 
-# truncate conf file, configuration will be passed in through environment variables (see conf schemas)
+# truncate conf file, configuration will be passed in through environment variables (see conf. schemas)
 RUN echo "" > ./releases/${VERSION}/exred.conf
 
 

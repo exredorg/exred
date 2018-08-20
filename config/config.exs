@@ -18,20 +18,20 @@ import_config "../apps/*/config/config.exs"
 
 # db config for Phoenix
 # the dbproxy in exred_library also uses this if it exists
-config :exred_ui, ExredUI.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "exred_user",
-  password: "hello",
-  database: "exred_ui_dev",
-  hostname: "localhost",
-  pool_size: 10
+# config :exred_ui, ExredUI.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   username: "exred_user",
+#   password: "hello",
+#   database: "exred_ui_dev",
+#   hostname: "localhost_main_for_repo",
+#   pool_size: 10
 
-config :exred_library, :psql_conn,
-  username: "exred_user",
-  password: "hello",
-  database: "exred_ui_dev",
-  hostname: "localhost",
-  port: 5432
+# config :exred_library, :psql_conn,
+#   username: "exred_user",
+#   password: "hello",
+#   database: "exred_ui_dev",
+#   hostname: "localhost_main",
+#   port: 5432
 
 # ssl options for the MQTT client
 # these get passed to the Erlang ssl module
