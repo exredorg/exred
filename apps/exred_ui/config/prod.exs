@@ -30,7 +30,7 @@ config :exred_ui, ExredUI.Repo,
   username: "exred_user",
   password: "hello",
   database: "exred_ui_dev",
-  hostname: "localhost_ui_prod",
+  hostname: "localhost",
   port: 5432,
   pool_size: 10
 
