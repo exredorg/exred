@@ -1,0 +1,31 @@
+version: "3"
+services:
+    exred_db:
+        build:
+          context: .
+          dockerfile: Dockerfile_db
+        volumes:
+            - ~/exred_postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - exrednet
+        env_file: env_file
+    exred:
+        build:
+          context: ../../../
+          dockerfile: docker_builds/x86/prod/Dockerfile_exred
+        depends_on:
+          - "exred_db"
+        volumes:
+          - ~/exred_data:/var/exred_data
+        ports:
+            - "4000:4000"
+        networks:
+            - exrednet
+        env_file: ./env_file
+        command: ["/usr/local/bin/wait-for-postgres.sh", "-r", "30", "--", "/app/bin/exred", "foreground"]
+        #command: ["tail", "-f", "/dev/null"]
+        #command: ["/usr/local/bin/wait-for-it.sh", "exred_db:5432", "-t", "30", "-s", "--", "/app/bin/exred", "foreground"]
+networks:
+    exrednet:

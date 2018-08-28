@@ -1,0 +1,4 @@
+FROM postgres:9.6
+
+RUN apt-get update -qq
+ADD assets/uuid-extension.sql /docker-entrypoint-initdb.d/

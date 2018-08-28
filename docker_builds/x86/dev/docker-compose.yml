@@ -1,0 +1,33 @@
+#
+# Dev container build
+#
+
+version: "3"
+services:
+    exred_db:
+        build:
+          context: .
+          dockerfile: Dockerfile_db
+        volumes:
+            - ~/exred_postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - exrednet
+        env_file: env_file
+    exred:
+        build: 
+          context: ../../../
+          dockerfile: docker_builds/x86/dev/Dockerfile_elixir_dev0
+        volumes:
+          - ~/exred_data:/var/exred_data
+          - ../../../:/src
+        ports:
+          - "4000:4000"
+          - "4001:4001"
+        networks:
+            - exrednet
+        env_file: ./env_file
+        command: ["tail", "-f", "/dev/null"]
+networks:
+    exrednet:

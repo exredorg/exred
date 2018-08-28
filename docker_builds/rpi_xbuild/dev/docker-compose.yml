@@ -1,0 +1,33 @@
+#
+# RaspberryPi Dev container build
+#
+
+version: "2"
+services:
+    exred_db_rpi:
+      image: exred_db_rpi:latest
+      volumes:
+        - ~/exred_postgres_data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+      networks:
+        - exrednet
+      env_file: env_file
+      
+    exred_rpi:
+      image: exred_rpi:latest
+      depends_on:
+        - "exred_db_rpi"
+      volumes:
+        - ~/exred_data:/var/exred_data
+        - ./src:/src
+      ports:
+        - "4000:4000"
+        - "4001:4001"
+      networks:
+        - exrednet
+      env_file: env_file
+      privileged: true
+      command: ["tail", "-f", "/dev/null"]
+networks:
+    exrednet:

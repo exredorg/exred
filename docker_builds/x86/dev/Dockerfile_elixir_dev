@@ -1,0 +1,37 @@
+FROM debian:stretch
+
+WORKDIR /src 
+
+COPY .tool-versions .
+
+SHELL ["/bin/bash", "-c"]
+
+# install build and run dependencies
+RUN apt-get -qq update && apt-get install -yqq \
+  postgresql-client \
+  procps \
+  redis-server redis-tools \
+  build-essential autoconf libncurses5-dev openssl libssl-dev fop xsltproc unixodbc-dev git curl
+
+# set up asdf and add plugins
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.1 \
+  && echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+
+RUN source ~/.bashrc \
+  && asdf plugin-add erlang \
+  && asdf plugin-add elixir \
+  && asdf plugin-add nodejs \
+  && ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+
+# install erlang, elixir and nodejs runtimes
+# (need to run this twice for some reason, otherwise it stops after intsalling erlang)
+RUN source ~/.bashrc \
+  && asdf install \
+  && asdf install
+
+# install ui dev dependencies
+#RUN source ~/.bashrc \
+#  && npm install ember-cli bower -g \
+#  && cd ui \
+#  && npm install \
+#  && bower install

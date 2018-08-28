@@ -1,0 +1,23 @@
+FROM elixir:1.6
+
+RUN apt-get -qq update && apt-get install -yqq \
+  postgresql-client \
+  procps \
+  git \
+  curl
+
+RUN  curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN  apt-get install -yqq nodejs
+RUN  npm install -g npm \
+  && npm install -g ember-cli bower
+
+WORKDIR /src
+
+RUN  mix local.hex --force \
+  && mix local.rebar --force
+
+RUN  iex --version \
+  && node --version \
+  && npm --version \
+  && ember --version
+
