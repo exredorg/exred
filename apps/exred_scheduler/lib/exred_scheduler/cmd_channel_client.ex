@@ -22,19 +22,40 @@ defmodule Exred.Scheduler.CmdChannelClient do
   
   # Callbacks
   def init(_args) do
-    {:ok, :initializing, 2000}
+    {:ok, {:initializing, 1}, 100}
   end 
 
 
-  def handle_info(:timeout, :initializing) do
-    state = case ExredUIWeb.Endpoint.subscribe( @cmd_topic ) do
-      :ok -> :subscribed
-      {:error, err} ->
-        Logger.error "Failed to subscribe to #{@cmd_topic}: #{inspect err}"
-        :failed
-    end 
-    {:noreply, state}
+  def handle_info(:timeout, {:initializing, @max_init_count}) do
+    {:noreply, :disconnected}
   end
+
+  def handle_info(:timeout, {:initializing, init_count}) do
+    Logger.info "Trying to subscribe to #{@cmd_topic} (attempt #{init_count})"
+    try do
+      case ExredUIWeb.Endpoint.subscribe( @cmd_topic ) do
+        :ok -> {:noreply, :subscribed}
+        {:error, err} ->
+          Logger.warn "Failed to subscribe to #{@cmd_topic}: #{inspect err}"
+          {:noreply, :disconnected}
+      end
+    rescue
+      # this is due to PubSub not ready yet, backing off and trying again later
+      e in ArgumentError -> 
+        Logger.warn "Failed to subscribe to #{@cmd_topic}: #{inspect e}"
+        {:noreply, {:initializing, init_count+1}, init_count*1000}
+    end 
+  end
+
+  #def handle_info(:timeout, :initializing) do
+  #  state = case ExredUIWeb.Endpoint.subscribe( @cmd_topic ) do
+  #    :ok -> :subscribed
+  #    {:error, err} ->
+  #      Logger.error "Failed to subscribe to #{@cmd_topic}: #{inspect err}"
+  #      :failed
+  #  end 
+  #  {:noreply, state}
+  #end
 
   def handle_info(%Phoenix.Socket.Broadcast{event: "request"} = msg, state = :subscribed) do
     case msg.payload do

@@ -33,5 +33,5 @@ config :exred_library, :psql_conn,
   username: "exred_user",
   password: "hello",
   database: "exred_ui_dev",
-  hostname: "localhost",
+  hostname: "exred_db",
   port: 5432
