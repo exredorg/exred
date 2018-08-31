@@ -24,7 +24,8 @@ module.exports = function(environment) {
     },
 
     DS: {
-      host: 'http://localhost:4000',
+      // adapter will default to window.location
+      // host: 'http://localhost:4000',
       namespace: 'api'
     },
 
