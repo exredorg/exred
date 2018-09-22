@@ -4,12 +4,19 @@ RUN apt-get -qq update && apt-get install -yqq \
   postgresql-client \
   procps \
   git \
-  curl
+  curl \
+  vim 
 
 RUN  curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN  apt-get install -yqq nodejs
 RUN  npm install -g npm \
   && npm install -g ember-cli bower
+
+RUN  git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it \
+  && ~/.bash_it/install.sh --silent \
+  && sed -e 's/^export.*BASH_IT_THEME.*$/export BASH_IT_THEME="powerline-multiline"/' -iold ~/.bashrc
+
+# RUN  ["/bin/bash", "-c", "bash-it enable alias git"]
 
 WORKDIR /src
 
