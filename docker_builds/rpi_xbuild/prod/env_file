@@ -1,4 +1,4 @@
-EXRED_DB_HOSTNAME=exred_db
+EXRED_DB_HOSTNAME=exred_db_rpi
 EXRED_DB_PORT=5432
 EXRED_DB_NAME=exred_ui_dev
 EXRED_DB_USERNAME=exred_user

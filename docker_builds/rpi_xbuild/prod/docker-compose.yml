@@ -1,5 +1,5 @@
 #
-# RaspberryPi Dev container build
+# RaspberryPi Prod build
 #
 
 version: "2"
@@ -19,19 +19,18 @@ services:
     exred_rpi:
       build:
         context: ../../../
-        dockerfile: docker_builds/rpi_xbuild/dev/Dockerfile_elixir_rpi_dev
+        dockerfile: docker_builds/rpi_xbuild/prod/Dockerfile_exred_rpi
       depends_on:
         - "exred_db_rpi"
       volumes:
         - ~/exred_data:/var/exred_data
-        - ~/src:/src
       ports:
         - "4000:4000"
-        - "4001:4001"
       networks:
         - exrednet
       env_file: ./env_file
       privileged: true
-      command: ["tail", "-f", "/dev/null"]
+      command: ["/usr/local/bin/wait-for-postgres.sh", "-r", "30", "--", "/app/bin/exred", "foreground"]
+      # command: ["tail", "-f", "/dev/null"]
 networks:
     exrednet:

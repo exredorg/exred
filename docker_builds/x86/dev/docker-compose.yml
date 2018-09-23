@@ -18,7 +18,9 @@ services:
     exred:
         build: 
           context: ../../../
-          dockerfile: docker_builds/x86/dev/Dockerfile_elixir_dev0
+          dockerfile: docker_builds/x86/dev/Dockerfile_elixir_dev
+        depends_on:
+          - "exred_db"
         volumes:
           - ~/exred_data:/var/exred_data
           - ../../../:/src

@@ -14,7 +14,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'  
 
 " others
-Plugin 'bling/vim-airline'   	    	" Lean & mean status/tabline for vim
+Plugin 'vim-airline/vim-airline' 
+Plugin 'vim-airline/vim-airline-themes' 
 Plugin 'fisadev/FixedTaskList.vim'  	" Pending tasks list
 Plugin 'rosenfeld/conque-term'      	" Consoles as buffers
 Plugin 'tpope/vim-surround'	   	" Parentheses, brackets, quotes, XML tags, and more
@@ -54,9 +55,10 @@ let g:airline_theme='badwolf'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
-map <F4> :TagbarToggle<CR>
+let mapleader='='
+nmap <leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 0
 
-map <F3> :NERDTreeToggle<CR>
+nmap <leader>o :NERDTreeToggle<CR>
 
-map <F2> :TaskList<CR>
+nmap <leader>l :TaskList<CR>
