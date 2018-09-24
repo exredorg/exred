@@ -49,6 +49,7 @@ defmodule Exred.Scheduler.Mixfile do
       {:exred_node_trigger,                 "~> 0.1.0"},
       {:exred_node_rpiphoto,                "~> 0.1.0"},
       {:exred_node_shell,                   "~> 0.1.0"},
+      {:exred_node_picar,     path: "/src/exred_node_picar"},
     ]
   end
 end

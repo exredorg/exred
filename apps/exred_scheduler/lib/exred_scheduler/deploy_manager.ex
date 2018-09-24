@@ -21,7 +21,7 @@ defmodule Exred.Scheduler.DeployManager do
   end
   
   def deploy do
-    GenServer.call(__MODULE__, :deploy)
+    GenServer.call(__MODULE__, :deploy, 30000)
   end
   
   # Callbacks
