@@ -41,7 +41,6 @@ defmodule Exred.Scheduler.Mixfile do
       {:exred_node_debug,                   "~> 0.1.0"},
       {:exred_node_gpio_in,                 "~> 0.1.0"},
       {:exred_node_gpio_out,                "~> 0.1.0"},
-      #{:exred_node_function,                "~> 0.1.0"},
       {:exred_node_redis_daemon,            "~> 0.1.0"},
       {:exred_node_redis_in,                "~> 0.1.0"},
       {:exred_node_redis_out,               "~> 0.1.0"},
@@ -49,6 +48,8 @@ defmodule Exred.Scheduler.Mixfile do
       {:exred_node_trigger,                 "~> 0.1.0"},
       {:exred_node_rpiphoto,                "~> 0.1.0"},
       {:exred_node_shell,                   "~> 0.1.0"},
+      {:exred_node_picar,                   "~> 0.1.0"},
+      {:exred_node_function,                "~> 0.1.0"},
     ]
   end
 end
