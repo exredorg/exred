@@ -13,6 +13,10 @@ RUN set -xe \
   && apt-get install erlang-dev erlang-parsetools \
   && apt-get install git openssh-client build-essential
 
+RUN  git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it \
+  && ~/.bash_it/install.sh --silent \
+  && sed -e 's/^export.*BASH_IT_THEME.*$/export BASH_IT_THEME="powerline-multiline"/' -iold ~/.bashrc
+
 WORKDIR /src
 
 RUN  mix local.hex --force \

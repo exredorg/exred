@@ -20,7 +20,7 @@ WORKDIR /exred
 
 ENV MIX_ENV=prod
 
-COPY mix.exs mix.lock ./
+COPY mix.* ./
 COPY config config
 COPY apps apps
 COPY ui/dist ui/dist
