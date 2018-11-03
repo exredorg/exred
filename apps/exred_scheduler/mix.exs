@@ -10,7 +10,7 @@ defmodule Exred.Scheduler.Mixfile do
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
       elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -35,21 +35,23 @@ defmodule Exred.Scheduler.Mixfile do
 
   defp nodes do
     [
-      {:exred_node_aws_iot_daemon,          "~> 0.1.0"},
-      {:exred_node_aws_iot_thingshadow_in,  "~> 0.1.0"},
+      {:exred_node_aws_iot_daemon, "~> 0.1.0"},
+      {:exred_node_aws_iot_thingshadow_in, "~> 0.1.0"},
       {:exred_node_aws_iot_thingshadow_out, "~> 0.1.0"},
-      {:exred_node_debug,                   "~> 0.1.0"},
-      {:exred_node_gpio_in,                 "~> 0.1.0"},
-      {:exred_node_gpio_out,                "~> 0.1.0"},
-      {:exred_node_redis_daemon,            "~> 0.1.0"},
-      {:exred_node_redis_in,                "~> 0.1.0"},
-      {:exred_node_redis_out,               "~> 0.1.0"},
-      {:exred_node_suppress,                "~> 0.1.0"},
-      {:exred_node_trigger,                 "~> 0.1.0"},
-      {:exred_node_rpiphoto,                "~> 0.1.0"},
-      {:exred_node_shell,                   "~> 0.1.0"},
-      {:exred_node_picar,                   "~> 0.1.0"},
-      {:exred_node_function,                "~> 0.1.0"},
+      {:exred_node_debug, "~> 0.1.0"},
+      {:exred_node_gpio_in, "~> 0.1.0"},
+      {:exred_node_gpio_out, "~> 0.1.0"},
+      {:exred_node_redis_daemon, "~> 0.1.0"},
+      {:exred_node_redis_in, "~> 0.1.0"},
+      {:exred_node_redis_out, "~> 0.1.0"},
+      {:exred_node_suppress, "~> 0.1.0"},
+      {:exred_node_trigger, "~> 0.1.0"},
+      {:exred_node_rpiphoto, "~> 0.1.0"},
+      {:exred_node_shell, "~> 0.1.0"},
+      {:exred_node_picar, "~> 0.1.0"},
+      {:exred_node_function, "~> 0.1.0"},
+      {:exred_node_grpc_server, path: "../../../exred_node_grpc_server"},
+      {:exred_node_grpc_twin, path: "../../../exred_node_grpc_twin"}
     ]
   end
 end
