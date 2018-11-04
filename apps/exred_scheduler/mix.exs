@@ -29,7 +29,7 @@ defmodule Exred.Scheduler.Mixfile do
       {:conform, "~> 2.2"},
       {:exred_library, "~> 0.1.11"},
       {:ex_doc, "~> 0.18.0", only: :dev, runtime: false},
-      {:wobserver, "~> 0.1"}
+      #{:wobserver, "~> 0.1"}
     ] ++ nodes()
   end
 
