@@ -84,13 +84,13 @@ export default Component.extend({
         }
     }];
 
-    let filterLabelConnOverlay = [ "Label", {
-        label: "",
-        location: 0.2,
-        id: "filter_label",
-        cssClass: "diagramFilterConnLabel",
-        events:{ click: this.connEvents.jspEventClickFilterLabel }
-    }];
+    //let filterLabelConnOverlay = [ "Label", {
+    //    label: "",
+    //    location: 0.2,
+    //    id: "filter_label",
+    //    cssClass: "diagramFilterConnLabel",
+    //    events:{ click: this.connEvents.jspEventClickFilterLabel }
+    //}];
 
     let thisComponent = this;
 

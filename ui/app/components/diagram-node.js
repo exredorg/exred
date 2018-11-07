@@ -84,8 +84,10 @@ export default Component.extend({
             strokeWidth: 2
         },
       };
-      let leftEndpoint = jspi.addEndpoint(this.elementId, endpoint_common, {anchor: "Left"});
-      let rightEndpoint = jspi.addEndpoint(this.elementId, endpoint_common, {anchor: "Right"});
+      //let leftEndpoint = jspi.addEndpoint(this.elementId, endpoint_common, {anchor: "Left"});
+      //let rightEndpoint = jspi.addEndpoint(this.elementId, endpoint_common, {anchor: "Right"});
+      jspi.addEndpoint(this.elementId, endpoint_common, {anchor: "Left"});
+      jspi.addEndpoint(this.elementId, endpoint_common, {anchor: "Right"});
 
     }
 

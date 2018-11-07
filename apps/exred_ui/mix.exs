@@ -7,10 +7,10 @@ defmodule ExredUI.Mixfile do
       version: "0.0.1",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
-      build_path: "../../_build",
+      build_path: "./_build",
       config_path: "./config/config.exs",
-      deps_path: "../../deps",
-      lockfile: "../../mix.lock",
+      deps_path: "./deps",
+      lockfile: "./mix.lock",
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
@@ -37,20 +37,20 @@ defmodule ExredUI.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:conform, "~> 2.2"},
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:plug_cowboy, "~> 1.0"},
-      #{:cowboy, "~> 1.0"},
       {:cors_plug, "~> 1.1"},
       {:guardian, "~> 0.14"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:ja_serializer, "~> 0.12.0"},
-      {:ecto_boot_migration, "~> 0.1.0"}
+      {:ecto_boot_migration, "~> 0.1.0"},
+      {:distillery, "~> 1.5", runtime: false},
+      {:conform, "~> 2.2"}
     ]
   end
 

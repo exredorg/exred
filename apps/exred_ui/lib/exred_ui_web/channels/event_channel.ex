@@ -3,7 +3,6 @@ defmodule ExredUIWeb.EventChannel do
 
   require Logger
 
-
   def join("event:debug", payload, socket) do
     if authorized?(payload) do
       # Logger.info "Joined: #{inspect socket}\npayload: #{inspect payload}"
@@ -12,14 +11,13 @@ defmodule ExredUIWeb.EventChannel do
       {:error, %{reason: "unauthorized"}}
     end
   end
-    
+
   def join("event:" <> _private_topic_id, _params, _socket) do
-      {:error, %{reason: "unauthorized"}}
+    {:error, %{reason: "unauthorized"}}
   end
 
-
   def handle_in("request", payload, socket) do
-    broadcast socket, "request", payload
+    broadcast(socket, "request", payload)
     {:reply, :ok, socket}
   end
 
@@ -32,10 +30,14 @@ defmodule ExredUIWeb.EventChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (event:lobby).
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 
+  def handle_in(event, payload, socket) do
+    Logger.debug("unhandled event: #{inspect(event)}, payload: #{inspect(payload)}")
+    {:noreply, socket}
+  end
 
   # Add authorization logic here as required.
   defp authorized?(_payload) do

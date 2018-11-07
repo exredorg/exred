@@ -1,6 +1,6 @@
 defmodule ExredUIWeb.CmdChannel do
   use ExredUIWeb, :channel
-  
+
   require Logger
 
   def join("cmd:general", payload, socket) do
@@ -11,13 +11,13 @@ defmodule ExredUIWeb.CmdChannel do
       {:error, %{reason: "unauthorized"}}
     end
   end
-    
+
   def join("cmd:" <> _private_topic_id, _params, _socket) do
-      {:error, %{reason: "unauthorized"}}
+    {:error, %{reason: "unauthorized"}}
   end
 
   def handle_in("request", payload, socket) do
-    broadcast socket, "request", payload
+    broadcast(socket, "request", payload)
     {:reply, :ok, socket}
   end
 
@@ -30,7 +30,12 @@ defmodule ExredUIWeb.CmdChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (cmd:lobby).
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    broadcast(socket, "shout", payload)
+    {:noreply, socket}
+  end
+
+  def handle_in(event, payload, socket) do
+    Logger.debug("unhandled event: #{inspect(event)}, payload: #{inspect(payload)}")
     {:noreply, socket}
   end
 

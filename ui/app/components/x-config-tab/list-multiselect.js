@@ -22,7 +22,7 @@ export default Component.extend({
     this.debug(this.get('itemlist'));
     let itemlist = this.get('itemlist');
     let value = [];
-    itemlist.forEach( (item) => { if(item.enabled) {value.push(item.name);}; } );
+    itemlist.forEach( (item) => { if(item.enabled) {value.push(item.name);} } );
     this.debug("value", value);
     this.set('value', value);
     this.sendAction('configUpdate', this.get('key'), value);

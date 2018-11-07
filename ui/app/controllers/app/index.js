@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed, observer } from '@ember/object';
+import { observer } from '@ember/object';
 import { v4 } from 'ember-uuid';
 import {inject as service} from '@ember/service';
 import Ember from 'ember';

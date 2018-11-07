@@ -47,6 +47,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_TRANSITIONS = true;
     ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.DS.host = 'http://localhost:4000';
   }
 
   if (environment === 'test') {
@@ -58,6 +59,7 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.DS.host = 'http://localhost:4000';
   }
 
   if (environment === 'production') {
