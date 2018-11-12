@@ -9,14 +9,14 @@ defmodule Exred.Scheduler.DeployManager do
   alias Exred.Library.Node
   alias Exred.Library.Connection
   alias Exred.Scheduler.DeploymentSupervisor
-  #  alias Exred.Scheduler.CmdChannelClient
+  alias Exred.Scheduler.CommandChannel
 
   use GenServer
 
   # API
 
-  def start_link(_args) do
-    GenServer.start_link(__MODULE__, _args, name: __MODULE__)
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args, name: __MODULE__)
   end
 
   def deploy do
@@ -64,7 +64,7 @@ defmodule Exred.Scheduler.DeployManager do
     sorted_nodes
     |> Enum.each(fn %Node{} = node ->
       Logger.info("STARTING NODE INSTANCE: #{node.name}")
-      start_args = [node.id, node.config]
+      start_args = [node.id, node.config, &Exred.Scheduler.EventChannel.send/2]
       child_spec = Supervisor.child_spec({node.module, start_args}, id: node.id)
 
       # TODO: what are we going to do when a child doesn't start up?
@@ -87,7 +87,7 @@ defmodule Exred.Scheduler.DeployManager do
     end)
 
     Logger.info("Set up connections")
-    # FIXME CmdChannelClient.broadcast("notification", %{msg: "Deployed Flows"})
+    CommandChannel.send("notification", %{msg: "Deployed Flows"})
 
     {:reply, :ok, state}
   end

@@ -35,3 +35,9 @@ config :exred_library, :psql_conn,
   database: "exred_ui_dev",
   hostname: "localhost",
   port: 5432
+
+config :grpc, start_server: true
+
+config :logger, :console,
+  format: "[$level] $metadata$message\n",
+  metadata: [:module, :function]

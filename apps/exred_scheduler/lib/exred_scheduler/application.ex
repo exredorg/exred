@@ -28,7 +28,7 @@ defmodule Exred.Scheduler.Application do
     # register topic handlers with PhxSocketClient
     :timer.sleep(2000)
     Exred.Scheduler.EventChannel.register()
-    # Exred.Scheduler.CommandChannel.register()
+    Exred.Scheduler.CommandChannel.register()
 
     start_res
   end

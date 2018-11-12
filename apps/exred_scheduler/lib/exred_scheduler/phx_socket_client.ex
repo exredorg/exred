@@ -92,7 +92,7 @@ defmodule Exred.Scheduler.PhxSocketClient do
   end
 
   def handle_message(topic, event, payload, _transport, state) do
-    Logger.warn("message on topic #{topic}: #{event} #{inspect(payload)}")
+    Logger.debug("message on topic #{topic}: #{event} #{inspect(payload)}")
 
     case Map.fetch(state.handlers, topic) do
       {:ok, handler} ->

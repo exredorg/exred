@@ -26,7 +26,7 @@ defmodule Exred.Scheduler.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:exred_library, "~> 0.1.11"},
+      {:exred_library, "~> 0.1"},
       {:phoenix_gen_socket_client, "~> 2.1.1"},
       {:websocket_client, "~> 1.2"},
       {:poison, "~> 2.0"},
@@ -56,6 +56,8 @@ defmodule Exred.Scheduler.Mixfile do
       {:exred_node_function, "~> 0.1.0"},
       {:exred_node_grpc_server, path: "../../../exred_node_grpc_server"},
       {:exred_node_grpc_twin, path: "../../../exred_node_grpc_twin"}
+      # {:exred_node_grpc_server, "~> 0.1.2-alpha"},
+      # {:exred_node_grpc_twin, "~> 0.1.0"}
     ]
   end
 end
